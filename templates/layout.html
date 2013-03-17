@@ -33,6 +33,12 @@ $def with (content)
 				clear:both;
 				padding-top: 10px;
 			}
+			strong.wrong{
+				margin-left: 10px;
+				font-size:10pt;
+				color:red;
+				font-weight: normal;	
+			}
 			body{
 				font-family:Verdana, Arial, sans-serif;
 				font-size: 10pt;
@@ -52,6 +58,7 @@ $def with (content)
 			input{
 				font-size:10pt;
 			}
+
 		</style>
 		<title>Credibility</title>
 	</head>
@@ -72,9 +79,10 @@ $def with (content)
 				<div>
 				$if content.username:
 				    <a href="/user/1"><em>hello</em> $content.username.</a>
+				    <a href="/logout">logout</a>
 				$else:
-				    <em>Hello</em>, world!
-				<a href="/logout">logout</a>
+				    <a href="/login">login</a> or 
+						<a href="/register">register</a>
 	    	</div>
 			</div>
 		</div>

@@ -1,15 +1,15 @@
+import hashlib
 import web
 import db
 
-from sqlalchemy.orm import scoped_session, sessionmaker
-from models import user
-import db
+from models import *
 
 urls = (
   '/', 'index',
 
   '/login', 'login',
-  '/logout', 'login',
+  '/register', 'register',
+  '/logout', 'logout',
   '/user/(\d+)', 'user',
   
   # topic
@@ -33,62 +33,73 @@ urls = (
 )
 
 def load_sqla(handler):
-    web.ctx.orm = scoped_session(sessionmaker(bind=db.engine))
     try:
         return handler()
     except web.HTTPError:
-       web.ctx.orm.commit()
+       db.session.commit()
        raise
     except:
-        web.ctx.orm.rollback()
+        db.session.rollback()
         raise
     finally:
-        web.ctx.orm.commit()
+        db.session.commit()
         # If the above alone doesn't work, uncomment 
         # the following line:
-        #web.ctx.orm.expunge_all() 
+        #db.session.expunge_all() 
 
 app = web.application(urls, globals())
 app.add_processor(load_sqla)
+
+if web.config.get('_session') is None:
+    session = web.session.Session(app, web.session.DiskStore('sessions'), {'count': 0})
+    web.config._session = session
+else:
+    session = web.config._session
+
+
+
 
 
 ## home page
 class index:        
   def GET(self):
     render = web.template.render('templates/', base='layout')
-    name = 'alvinsj'
-    return render.index(name)
+    username = False
+    if hasattr(session,'username'):
+      username = session.username
+    else:
+      username = False
+    web.debug(username)
+    return render.index(username)
+
+
+
+
+
+## logout
+class logout :
+  def GET(self):
+    session.kill()
+    return web.seeother('/')
 
 
 ## login
 class login:
-  def not_user_exists(url):
-    return True
-
-  user_exists_validator = web.form.Validator('Page already exists', 
-                                not_user_exists)
-
-  vpass = web.form.regexp(r".{3,20}$", 'must be between 3 and 20 characters')
-  vemail = web.form.regexp(r".*@.*", "must be a valid email address")
   
-  registration_form = web.form.Form(
-      web.form.Textbox('username', web.form.notnull, user_exists_validator,
-          size=30,
-          description="username:"),
-      web.form.Textbox('email', web.form.notnull, vemail,
-          size=30,
-          description="email:"),
-      web.form.Textbox('password', web.form.notnull, vpass,
-          size=30,
-          description="password:"),
-      web.form.Button('sign up'),
-  )
+  def valid_email_password(self, username, password):
+    pwdhash = hashlib.md5(password).hexdigest()
+    user = db.session.query(User).filter_by(name=username,password=pwdhash).first()
+    if not user:
+      return False
+    else:
+      session.user = user
+      return True
 
   login_form = web.form.Form(
-      web.form.Textbox('username', web.form.notnull,
+      web.form.Textbox('username', web.form.notnull, 
           size=30,
           description="username:"),
-      web.form.Textbox('password', web.form.notnull, vpass,
+      web.form.Password('password', web.form.notnull,
           size=30,
           description="password:"),
       web.form.Button('login'),
@@ -99,23 +110,105 @@ class login:
     login_form = self.login_form()
     login_form.fill({'url':url})
 
+    render = web.template.render('templates/', base="layout")
+    return render.user.login(login_form, "Log in")
+
+  def POST(self):
+    i = web.input()
+    login_form = self.login_form()
+    login_success = self.valid_email_password(i.username, i.password)
+    render = web.template.render('templates/', base="layout")
+
+    if (not login_form.validates()) or (not login_success):
+      return render.user.login(login_form, "Log in")
+    else:
+      session.logged_in = True
+      session.username = session.user.name
+      web.seeother('/')
+
+
+
+
+
+
+
+## register
+class register:
+  def not_user_exists(username):
+    user = db.session.query(User).filter_by(name=username).first()
+    if not user:
+      return True
+    else:
+      return False
+
+  def not_email_exists(email):
+    email = db.session.query(User).filter_by(email=email).first()
+    if not email:
+      return True
+    else:
+      return False
+
+  user_exists_validator = web.form.Validator('Username already taken.', 
+                                not_user_exists)
+
+  email_exists_validator = web.form.Validator('Email already registered.', 
+                                not_email_exists)
+
+  vpass = web.form.regexp(r".{3,20}$", 'must be between 3 and 20 characters')
+  vemail = web.form.regexp(r".*@.*", "must be a valid email address")
+
+  registration_form = web.form.Form(
+    web.form.Textbox('username', web.form.notnull, user_exists_validator,
+        size=30,
+        description="username:"),
+    web.form.Textbox('email', web.form.notnull, vemail, email_exists_validator,
+        size=30,
+        description="email:"),
+    web.form.Password('password', web.form.notnull, vpass,
+        size=30,
+        description="password:", type="password"),
+    web.form.Password("password2", web.form.notnull, vpass,
+      description="repeat password:"),
+    web.form.Button('sign up'),
+    validators = [
+        web.form.Validator("Passwords did'nt match", lambda i: i.password == i.password2)]
+  )
+
+
+  def GET(self):
+    url = web.input(url='').url
+
     registration_form = self.registration_form()
     registration_form.fill({'url':url})
 
     render = web.template.render('templates/', base="layout")
-    return render.user.login(login_form, registration_form)
+    return render.user.login(registration_form, "Sign up")
+
 
   def POST(self):
-    login_form = self.login_form()
-    registration_form = self.registration_form()
+    i = web.input()
 
+    registration_form = self.registration_form()
     render = web.template.render('templates/', base="layout")
 
     if not registration_form.validates():
-      return render.user.login(login_form, registration_form)
+      return render.user.login(registration_form, "Sign up")
     else:
+      pwdhash = hashlib.md5(i.password).hexdigest()
+      u = User(name=i.username
+                ,email=i.email
+                ,password=pwdhash)
+      db.session.add(u)
+      db.session.commit()
+
+      session.logged_in = True
+      session.username = u.name
+
       web.seeother('/')
-        # do whatever is required for registration
+
+
+
+
 
 
 
