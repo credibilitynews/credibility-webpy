@@ -12,7 +12,7 @@ $var title:
 					<a href="/topic/$t.id" style="color:black">$t.title</a> <em>$t.hashtag</em>
 				<div class="info">
 					<small style="color:gray">
-						 $t.points points by $t.user.name $t.created_at | $t.story_count links
+						 $t.points points by $t.user.name $pretty_date(t.created_at) | $t.story_count links
 					</small>
 				</div>
 			</div>	

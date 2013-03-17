@@ -1,12 +1,12 @@
 $def with (form, id, link)
 $var menu: 
-$var title: <a href="/topic/$link.topic_id">$link.topic.hashtag</a>
+$var title: <a href="/topic/$link.topic_id/upvote"><i class="icon-arrow-up"></i></a><a href="/topic/$link.topic_id">$link.topic.hashtag</a>
 <!-- base stories -->
 <div class="span12" >
 	<div style="margin:5px">	
 
 		<div class="link" style="clear:both">
-			<i class="icon-arrow-up"></i>
+			<a href="/link/$link.id/upvote"><i class="icon-arrow-up"></i></a>
 				<a href="$link.url" style="color:black">$link.title</a> <em>($short(link.url))</em>
 			<div class="info">
 				<small style="color:gray">
@@ -15,7 +15,7 @@ $var title: <a href="/topic/$link.topic_id">$link.topic.hashtag</a>
 			</div>
 		</div>
 		<hr>
-		$if session.user.name:
+		$if hasattr(session, 'user'):
 			<form method="post">
 				$:form.comment.render()
 				<div>

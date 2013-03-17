@@ -70,12 +70,14 @@ class Topic(Base):
   points = property(_get_points)
 
   def _get_base_stories(self):
-    return object_session(self).query(Link).filter_by(topic_id=self.id, type=1).all()
+    stories =  object_session(self).query(Link).filter_by(topic_id=self.id, type=1).all()
+    return  sorted(stories, key=lambda story: story.points, reverse=True)
   
   base_stories = property(_get_base_stories)
 
   def _get_alt_stories(self):
-    return object_session(self).query(Link).filter_by(topic_id=self.id, type=2).all()
+    stories =  object_session(self).query(Link).filter_by(topic_id=self.id, type=2).all()
+    return  sorted(stories, key=lambda story: story.points, reverse=True)
   
   alt_stories = property(_get_alt_stories)
 
@@ -153,8 +155,9 @@ class Link(Base):
   comments_count = property(_get_comments_count)
 
   def _get_comments(self):
-    return object_session(self).query(Comment).filter_by(link_id=self.id).all()
-  
+    comments =  object_session(self).query(Comment).filter_by(link_id=self.id).all()
+    return  sorted(comments, key=lambda comment: comment.points, reverse=True)
+    
   comments = property(_get_comments)
 
 
@@ -208,7 +211,7 @@ class Comment(Base):
      return "<Link('%s', %d, %d)>" % (self.content, self.user_id, self.link_id)
 
   def _get_points(self):
-    return object_session(self).query(distinct(CommentVote.user_id)).filter_by(link_id=self.id).count()
+    return object_session(self).query(distinct(CommentVote.user_id)).filter_by(comment_id=self.id).count()
   
   points = property(_get_points)
 

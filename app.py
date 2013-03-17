@@ -60,6 +60,7 @@ def shorten_link(link):
 
 
 
+
 app = web.application(urls, globals())
 app.add_processor(load_sqla)
 
@@ -79,12 +80,14 @@ class index:
     return db.session.query(Topic).all()
 
   def GET(self):
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     username = None
     if hasattr(session,'username'):
       username = session.username
     
     topics = self.all_topics()
+    topics = sorted(topics, key=lambda topic: topic.points, reverse=True)
+
     return render.index(topics)
 
 
@@ -126,14 +129,14 @@ class login:
     login_form = self.login_form()
     login_form.fill({'url':url})
 
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.user.login(login_form, "Log in")
 
   def POST(self):
     i = web.input()
     login_form = self.login_form()
     login_success = self.valid_email_password(i.username, i.password)
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
     if (not login_form.validates()) or (not login_success):
       return render.user.login(login_form, "Log in")
@@ -197,7 +200,7 @@ class register:
     registration_form = self.registration_form()
     registration_form.fill({'url':url})
 
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.user.login(registration_form, "Sign up")
 
 
@@ -205,7 +208,7 @@ class register:
     i = web.input()
 
     registration_form = self.registration_form()
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
     if not registration_form.validates():
       return render.user.login(registration_form, "Sign up")
@@ -274,7 +277,7 @@ class new_topic:
     form = self.form()
     form.fill({'url':url})
 
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
 
     return render.topic.new(form)
@@ -289,7 +292,7 @@ class new_topic:
     i = web.input()
 
     form = self.form()
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
     if not form.validates():
       return render.topic.new(form)
@@ -303,14 +306,24 @@ class new_topic:
 
 
 
+
+
+
 ## topic 
 class topic:
   def topic(self, id):
     return db.session.query(Topic).filter_by(id=id).first()
 
   def GET(self, id):
-    render = web.template.render('templates/', base='layout', globals={'session':session, 'short': shorten_link, 'pretty_date': pretty_date })
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr, 'short': shorten_link, 'pretty_date': pretty_date })
     return render.topic.show(id, self.topic(id))
+
+
+
+
+
+
+
 
 ## upvote topic
 class upvote_topic:
@@ -328,6 +341,8 @@ class upvote_topic:
       db.session.add(vote)
 
     return web.seeother("/topic/%d" % int(id))
+
+
 
 
 
@@ -368,7 +383,7 @@ class new_base_link:
     form = self.form()
     form.fill({'url':url})
 
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.link.new(form, id)
 
   def POST(self, id):
@@ -381,7 +396,7 @@ class new_base_link:
     i = web.input()
 
     form = self.form()
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
     if not form.validates():
       return render.link.new(form,id)
@@ -391,6 +406,10 @@ class new_base_link:
       db.session.commit()
 
       return web.seeother('/topic/%d' % int(id))
+
+
+
+
 
 
 
@@ -422,7 +441,7 @@ class new_alt_link:
     form = self.form()
     form.fill({'url':url})
 
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.link.new(form,id)
 
   def POST(self, id):
@@ -435,7 +454,7 @@ class new_alt_link:
     i = web.input()
 
     form = self.form()
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
     if not form.validates():
       return render.link.new(form, id)
@@ -445,6 +464,8 @@ class new_alt_link:
       db.session.commit()
 
       return web.seeother('/topic/%d' % int(id))
+
+
 
 
 
@@ -462,7 +483,7 @@ class link:
     i = web.input()
 
     form = self.form()
-    render = web.template.render('templates/', base='layout', globals={'session':session, 'short': shorten_link, 'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr, 'short': shorten_link, 'pretty_date':pretty_date})
     return render.link.show(form, id, self.link(id))
 
   def POST(self, id):
@@ -475,7 +496,7 @@ class link:
     i = web.input()
 
     form = self.form()
-    render = web.template.render('templates/', base='layout', globals={'session':session, 'short': shorten_link, 'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr, 'short': shorten_link, 'pretty_date':pretty_date})
 
     if not form.validates():
       return render.link.show(form, id, self.link(id))
@@ -512,6 +533,8 @@ class upvote_link:
 
 
 
+
+
 ## upvote comment
 class upvote_comment:
   def GET(self, id):
@@ -538,23 +561,23 @@ class upvote_comment:
 ## user
 class user:
   def GET(self,id):
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.user.show(id)
 
 ## static pages
 class about:
   def GET(self):
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.static.about()
 
 class faq:
   def GET(self):
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.static.faq()
 
 class contact:
   def GET(self):
-    render = web.template.render('templates/', base='layout', globals={'session':session,'pretty_date':pretty_date})
+    render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.static.contact()
 
 
