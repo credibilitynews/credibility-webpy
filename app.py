@@ -6,6 +6,11 @@ import re
 from pretty_date import pretty_date
 from models import *
 
+
+
+
+
+## routes
 urls = (
   '/', 'index',
 
@@ -33,7 +38,6 @@ urls = (
 
 )
 
-
 def load_sqla(handler):
   try:
       return handler()
@@ -58,17 +62,19 @@ def shorten_link(link):
   else:
     return link
 
-
-
-
+## app setup
 app = web.application(urls, globals())
 app.add_processor(load_sqla)
 
+## session setup
 if web.config.get('_session') is None:
     session = web.session.Session(app, web.session.DiskStore('sessions'), {'count': 0})
     web.config._session = session
 else:
     session = web.config._session
+
+
+
 
 
 
@@ -89,6 +95,9 @@ class index:
     topics = sorted(topics, key=lambda topic: topic.points, reverse=True)
 
     return render.index(topics)
+
+
+
 
 
 
@@ -144,6 +153,7 @@ class login:
       session.logged_in = True
       session.username = session.user.name
       web.seeother('/')
+
 
 
 
@@ -232,6 +242,7 @@ class register:
 
 
 
+
 ## new topics
 class new_topic:
   def not_title_exists(title):
@@ -302,6 +313,7 @@ class new_topic:
       db.session.commit()
 
       web.seeother('/topic/%d' % topic.id)
+
 
 
 
@@ -563,6 +575,9 @@ class user:
   def GET(self,id):
     render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
     return render.user.show(id)
+
+
+
 
 ## static pages
 class about:
