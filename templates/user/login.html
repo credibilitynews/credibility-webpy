@@ -1,0 +1,16 @@
+$def with (login_form, registration_form)
+$var username: alvinsj
+$var menu: 
+$var title: <a href="/topic/$id">#topic</a>
+<div class="span12">
+	<h5>Login</h5>
+	<form action="/login" method="post">
+	$:login_form.render()
+	</form>
+	<br>
+	or
+	<h5>Sign up</h5>
+	<form action="/signup" method="post">
+	$:registration_form.render()
+	</form>
+</div>

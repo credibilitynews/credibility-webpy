@@ -1,0 +1,11 @@
+$def with (form, id)
+$var username: alvinsj
+$var menu: 
+$var title:
+
+<div class="span12">
+	<h3>New Topic <small><a href="/topic/$id">parent</a></small></h3>
+	<form action="" method="post">
+	$:form.render()
+	</form>
+</div>

@@ -1,0 +1,105 @@
+$def with (content)
+
+<html>
+	<head>
+		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">	
+		<style>
+			.logo{
+				padding:5px;
+				border:1px solid white;
+				font-weight:bolder;
+			}
+			.column{
+				padding-bottom: 20px;
+			}
+			.column-header{
+				border-bottom: 2px solid #c0c0c0;
+				padding-top:20px;
+			}
+			.link{
+				margin-top: 20px;
+				margin-bottom: 5px;
+			}
+			header .container{
+				background-color: #e0e0e0;
+				margin-top: 10px;
+			}
+			header .container .row{
+				padding:5px;
+			}
+			footer .container{
+				border-top:1px solid #c0c0c0;
+				clear:both;
+				padding-top: 10px;
+			}
+			body{
+				font-family:Verdana, Arial, sans-serif;
+				font-size: 10pt;
+			}
+			a, a:link{
+				color:#333333;
+			}
+			a:visited{
+				color:#828282;
+			}
+			label{
+				text-align:right;
+			}
+			ul{
+				list-style:none;
+			}
+			input{
+				font-size:10pt;
+			}
+		</style>
+		<title>Credibility</title>
+	</head>
+<body>
+<header class="header">
+	<div class="container">
+		<div class="row">
+			<div class="span5">
+				<span class="logo">C</span> <a href="/" style="color:black"><strong>Credibility</strong></a>
+				$if content.menu: 
+					$:content.menu 
+			</div>
+			<div class="span3">
+				$if content.title: 
+					$:content.title
+			</div>
+			<div class="pull-right">
+				<div>
+				$if content.username:
+				    <a href="/user/1"><em>hello</em> $content.username.</a>
+				$else:
+				    <em>Hello</em>, world!
+				<a href="/logout">logout</a>
+	    	</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row">
+		$:content
+	</div>
+</div>
+
+<footer class="footer">		
+	<div class="container">
+		<div class="row">
+		
+			<div class="span12" style="text-align:center">
+				
+				<a href="/about">about</a> | 
+				<a href="/faq">faq</a> | 
+				<a href="/contact">contact</a><br/>
+				<small><em><a href="http://github.com/alvinsj/credibility">open sourced</a>. tribute to <a href="http://aaronsw.com">@aaronsw</a>.</small>
+			</div>
+		</div>
+	</div>
+</footer>
+
+</body>
+</html>
