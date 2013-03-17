@@ -1,34 +1,23 @@
-$def with (username)
-$var username: $username
+$def with (topics)
 $var menu: <a href="/topic/new">submit</a>
 $var title: 
 <!-- base stories -->
 <div class="span12 column" >
 	<div style="margin:5px">	
 		<ol>
-		<li>
-		<div class="link" style="clear:both">
-			<i class="icon-arrow-up"></i>
-				<a href="/topic/2" style="color:black">A vs B on credibility</a> <em>(#AvsB)</em>
-			<div class="info">
-				<small style="color:gray">
-					 136 points by alvinsj 8 days ago | 23 links, 123 comments
-				</small>
-			</div>
-		</div>	
-		</li>
+		$for t in topics:
+			<li>
+			<div class="link" style="clear:both">
+				<a href="/topic/$t.id/upvote"><i class="icon-arrow-up"></i></a>
+					<a href="/topic/$t.id" style="color:black">$t.title</a> <em>$t.hashtag</em>
+				<div class="info">
+					<small style="color:gray">
+						 $t.points points by $t.user.name $t.created_at | $t.story_count links
+					</small>
+				</div>
+			</div>	
+			</li>
 		
-		<li>
-		<div class="link" style="clear:both">
-			<i class="icon-arrow-up"></i>
-			<a href="/topic/1" style="color:black">B vs C on credibility</a> <em>(#BvsC)</em>
-			<div class="info">
-				<small style="color:gray">
-					36 points by alvinsj 8 days ago | 23 links, 123 comments
-				</small>
-			</div>
-		</div>
-		</li>	
 		</ol>
 		
 	</div>

@@ -77,12 +77,11 @@ $def with (content)
 			</div>
 			<div class="pull-right">
 				<div>
-				$if content.username:
-				    <a href="/user/1"><em>hello</em> $content.username.</a>
-				    <a href="/logout">logout</a>
+				$if not session.user.name:
+					<a href="/login">login</a> or 
+					<a href="/register">register</a>
 				$else:
-				    <a href="/login">login</a> or 
-						<a href="/register">register</a>
+					<a href="/user/$session.user.id"><em>hello</em> $session.user.name.</a> <a href="/logout">logout</a>
 	    	</div>
 			</div>
 		</div>

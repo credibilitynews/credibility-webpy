@@ -1,42 +1,44 @@
-$def with (id)
-$var username: alvinsj
+$def with (form, id, link)
 $var menu: 
-$var title: <a href="/topic/$id">#topic</a>
+$var title: <a href="/topic/$link.topic_id">$link.topic.hashtag</a>
 <!-- base stories -->
 <div class="span12" >
 	<div style="margin:5px">	
 
 		<div class="link" style="clear:both">
 			<i class="icon-arrow-up"></i>
-				<a href="http://one.story.com" style="color:black">Story one</a> <em>(one.story.com)</em>
+				<a href="$link.url" style="color:black">$link.title</a> <em>($short(link.url))</em>
 			<div class="info">
 				<small style="color:gray">
-					136 points by alvinsj 8 days ago | 1 comments
+					$link.points points by $link.user.name 8 days ago | $link.comments_count comments
 				</small>
 			</div>
 		</div>
 		<hr>
-		<form action="" method="post">
-			<textarea class="span4" name="comment"></textarea>
-			<div>
-			<input type="submit" value="comment"/>
-			</div>
-		</form>	
+		$if session.user.name:
+			<form method="post">
+				$:form.comment.render()
+				<div>
+				<input type="submit" value="comment"/>
+				</div>
+			</form>	
+		
 		
 		<h5>Comments</h5>
 		<ul>
-			<li>
-			<div class="comment" style="clear:both">
-				<div class="info">
-					<i class="icon-arrow-up"></i>
-					<small style="color:gray">
-						alvinsj 8 days ago | <a name="comment2" href="/link/1#comment2">link</a>
-					</small>
+			$for c in link.comments
+				<li>
+				<div class="comment" style="clear:both">
+					<div class="info">
+						<a href="/comment/$c.id/upvote"><i class="icon-arrow-up"></i></a>
+						<small style="color:gray">
+							$c.user.name 8 days ago | <a name="c$c.id" href="/link/$link.id/#c$c.id">link</a>
+						</small>
+					</div>
+					<p>$c.content</p>
+					
 				</div>
-				<p>some comment on this link</p>
-				
-			</div>
-			</li>
+				</li>
 
 		</ul>
 	</div>

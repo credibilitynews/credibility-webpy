@@ -1,10 +1,9 @@
 $def with (id)
-$var username: alvinsj
 $var menu: 
 $var title: 
 <div class="span12" style="height:200px">
 	<h5>user profile:</h5>
-	name: alvinsj<br>
-	email: alvinsj@alvinsj.com<br>
-	karma: 12<br>
+	name: $session.user.name<br>
+	email: $session.user.email<br>
+	karma: <em>[not available yet]</em><br>
 </div>
