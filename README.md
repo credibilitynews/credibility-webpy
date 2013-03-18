@@ -1,5 +1,5 @@
 ### Credibility
-Credibility.app is initiated to contribute a space for people to collect and read stories from different perspectives, create awareness among users on the credibility of public articles.
+Credibility.app is initiated to contribute a space for people to collect and read stories from different perspectives, create awareness among users to rethink/review the credibility of various public articles and publishers.
 
 This is a special project tribute to [@aaronsw](http://www.rememberaaronsw.com) for his contribution, inspiration to the internet and human mankind.
 
