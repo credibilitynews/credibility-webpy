@@ -54,11 +54,16 @@ def load_sqla(handler):
       #db.session.expunge_all() 
 
 def shorten_link(link):
-  l = re.findall(r"^[^\/]+:\/\/[^\/]*?\.?([^\/.]+)\.[^\/.]+(?::\d+)?\/?", link)
+  l = re.findall(r"^https?://(.+)/?", link)
 
   if len(l) > 0:
-    e = re.findall(r"%s\.(..[a-zA-Z]?)/?" % l[0], link)
-    return l[0]+"."+e[0]
+    n=0
+    try:
+      n = l[0].index('/')
+    except ValueError:
+      n = len(l[0])
+
+    return l[0][:n]
   else:
     return link
 
