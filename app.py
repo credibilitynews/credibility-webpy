@@ -232,7 +232,7 @@ class register:
 
       session.logged_in = True
       session.username = u.name
-      session.user = user
+      session.user = u
 
       web.seeother('/')
 
