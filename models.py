@@ -192,7 +192,7 @@ class Comment(Base):
   __mapper_args__ = { 'extension': BaseExtension() }
 
   id = Column(Integer, primary_key=True)
-  content = Column(Text(256))
+  content = Column(Text)
   user_id = Column(Integer, ForeignKey('users.id'))
   link_id = Column(Integer, ForeignKey('links.id'))
   active = Column(Boolean, default=True)

@@ -1,7 +1,6 @@
-MySQL-python==1.2.4
-PyYAML==3.10
 SQLAlchemy==0.8.0
 distribute==0.6.34
+psycopg2==2.4.6
 virtualenv==1.9.1
 web.py==0.37
 wsgiref==0.1.2
