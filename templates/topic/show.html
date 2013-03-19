@@ -22,7 +22,7 @@ $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><
 						<div class="info">
 							<small style="pull-right">
 								$s.points points by $s.user.name $pretty_date(s.created_at) | 
-								<a href="/link/$id"> $s.comments_count comments</a>
+								<a href="/link/$s.id"> $s.comments_count comments</a>
 							</small>
 						</div>
 					</div>
@@ -52,7 +52,7 @@ $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><
 						<a href="$s.url" style="color:gray">$s.title</a> <em>($short(s.url))</em>
 						<div class="info">
 							<small style="pull-right">
-								$s.points points by $s.user.name $pretty_date(s.created_at) | <a href="/link/$id">$s.comments_count comments</a>
+								$s.points points by $s.user.name $pretty_date(s.created_at) | <a href="/link/$s.id">$s.comments_count comments</a>
 							</small>
 						</div>
 					</div>
