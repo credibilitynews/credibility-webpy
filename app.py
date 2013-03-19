@@ -34,8 +34,9 @@ urls = (
 
   '/about', 'about',
   '/faq', 'faq',
-  '/contact', 'contact'
+  '/contact', 'contact',
 
+  '/favicon.ico','favicon'
 )
 
 def load_sqla(handler):
@@ -80,6 +81,12 @@ else:
 
 
 
+
+
+## favicon
+class favicon:
+  def GET(self):
+    raise web.redirect('/static/favicon.ico')
 
 
 
