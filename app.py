@@ -430,7 +430,7 @@ class new_base_link:
 
 
 
-## new alternate link
+## new alternative story link
 class new_alt_link:
   def not_link_exists(url):
     link = db.session.query(Link).filter_by(url=url).first()
@@ -450,7 +450,7 @@ class new_alt_link:
       web.form.Textbox('url', web.form.notnull, vlink, link_exists_validator,
           size=30,
           description="url:"),
-      web.form.Button('add alternate story link'),
+      web.form.Button('add alternative story link'),
   )
 
   def GET(self, id):
