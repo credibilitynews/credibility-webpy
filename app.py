@@ -461,6 +461,12 @@ class new_alt_link:
   )
 
   def GET(self, id):
+    username = None
+    if hasattr(session, 'username'):
+      username = session.username
+    else:
+      return web.seeother('/register')
+
     url = web.input(url='').url
     form = self.form()
     form.fill({'url':url})
