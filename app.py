@@ -192,8 +192,6 @@ class register:
   user_exists_validator = web.form.Validator('Username already taken.', 
                                 not_user_exists)
 
-  email_exists_validator = web.form.Validator('Email already registered.', 
-                                not_email_exists)
 
   vpass = web.form.regexp(r".{3,20}$", 'must be between 3 and 20 characters')
   vemail = web.form.regexp(r".*@.*", "must be a valid email address")
@@ -202,9 +200,6 @@ class register:
     web.form.Textbox('username', web.form.notnull, user_exists_validator,
         size=30,
         description="username:"),
-    web.form.Textbox('email', web.form.notnull, vemail, email_exists_validator,
-        size=30,
-        description="email:"),
     web.form.Password('password', web.form.notnull, vpass,
         size=30,
         description="password:", type="password"),
@@ -237,7 +232,6 @@ class register:
     else:
       pwdhash = hashlib.md5(i.password).hexdigest()
       u = User(name=i.username
-                ,email=i.email
                 ,password=pwdhash)
       db.session.add(u)
       db.session.commit()

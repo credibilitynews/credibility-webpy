@@ -6,11 +6,10 @@ $var title: <a href="/topic/$link.topic_id/upvote"><i class="icon-arrow-up"></i>
 	<div style="margin:5px">	
 
 		<div class="link" style="clear:both">
-			<a href="/link/$link.id/upvote"><i class="icon-arrow-up"></i></a>
-				<a href="$link.url" style="color:black">$link.title</a> <em>($short(link.url))</em>
+				<a href="$link.url" style="color:black">$link.title</a> <em class="info">($short(link.url))</em>
 			<div class="info">
 				<small style="color:gray">
-					$link.points points by $link.user.name $pretty_date(link.created_at) | $link.comments_count comments
+					<a href="/link/$link.id/upvote"><i class="icon-arrow-up"></i></a> | $link.points points by $link.user.name $pretty_date(link.created_at) | $link.comments_count comments
 				</small>
 			</div>
 		</div>

@@ -30,13 +30,12 @@ class User(Base):
   created_at = Column(DateTime) 
   updated_at = Column(DateTime) 
 
-  def __init__(self, name, email, password):
+  def __init__(self, name, password):
     self.name = name
-    self.email = email
     self.password = password
 
   def __repr__(self):
-    return "<User('%s','%s', '%s')>" % (self.name, self.email, self.password)
+    return "<User('%s','%s', '%s')>" % (self.name, self.password)
 
 
 
