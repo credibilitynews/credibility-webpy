@@ -6,134 +6,75 @@ $def with (content)
 		
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+		
 		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">	
-		<style>
-			.logo{
-				padding:5px;
-				border:1px solid white;
-				font-weight:bolder;
-			}
-			.column{
-				padding-bottom: 20px;
-			}
-			.column-header{
-				border-bottom: 2px solid #c0c0c0;
-				padding-top:20px;
-			}
-			.link{
-				margin-top: 20px;
-				margin-bottom: 5px;
-			}
-			header .container{
-				background-color: #e0e0e0;
-				margin-top: 10px;
-			}
-			header .container .row{
-				padding:5px;
-			}
-			footer .container{
-				border-top:1px solid #c0c0c0;
-				clear:both;
-				padding-top: 10px;
-			}
-			strong.wrong{
-				margin-left: 10px;
-				font-size:10pt;
-				color:red;
-				font-weight: normal;	
-			}
-			body{
-				font-family:Verdana, Arial, sans-serif;
-				font-size: 10pt;
-			}
-			
-			a, a:link{
-				color:#333;
-			}
-			a:visited{
-				color:#000;
-			}
-
-			.link a, a:link{
-				color:#828282;
-			}
-			.link a:visited{
-				color:#000;
-			}
-
-			label{
-				text-align:right;
-			}
-			ul{
-				list-style:none;
-			}
-			input{
-				font-size:10pt;
-			}
-			em.info{
-				font-size: smaller;
-			}
-		</style>
-		<title>Credibility</title>
+		<link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" charset="utf-8"/>
+		
+		<title>Credibility.cc</title>
 	</head>
 <body>
-<header class="header">
-	<div class="container">
-		<div class="row">
-			<div class="span5">
-				<span class="logo">C</span> <a href="/" ><strong>Credibility</strong></a>
-				$if content.menu: 
-					$:content.menu 
-			</div>
-			<div class="span3">
-				$if content.title: 
-					$:content.title
-			</div>
-			<div class="pull-right">
-				<div>
-				$if hasattr(session, 'user'):
-					<a href="/user/$session.user.id"><em>hello $session.user.name</em>.</a> <a href="/logout">logout</a>
-				$else:
-					<a href="/login">login</a> or 
-					<a href="/register">register</a>
-	    	</div>
+	<header class="header">
+		<div class="container">
+			<div class="row">
+				<div class="span5">
+					<span class="logo">C</span> <a href="/" ><strong>Credibility</strong></a>
+					$if content.menu: 
+						$:content.menu 
+				</div>
+				<div class="span3">
+					$if content.title: 
+						$:content.title
+				</div>
+				<div class="pull-right">
+					<div>
+					$if hasattr(session, 'user'):
+						<a href="/user/$session.user.id"><em>hello $session.user.name</em>.</a> <a href="/logout">logout</a>
+					$else:
+						<a href="/login">login</a> or 
+						<a href="/register">register</a>
+		    	</div>
+				</div>
 			</div>
 		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			$:content
+		</div>
 	</div>
-</header>
-<div class="container">
-	<div class="row">
-		$:content
-	</div>
-</div>
 
-<footer class="footer">		
-	<div class="container">
-		<div class="row">
-		
-			<div class="span12" style="text-align:center">
-				
-				<a href="/about">about</a> | 
-				<a href="/faq">faq</a> | 
-				<a href="/contact">contact</a> | 
-				<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a><br/>
-				<small><em><a href="http://github.com/alvinsj/credibility">open sourced</a>. tribute to <a href="http://www.rememberaaronsw.com">@aaronsw</a>.</em></small>
+	<footer class="footer">		
+		<div class="container">
+			<div class="row">
+			
+				<div class="span12" style="text-align:center">
+					
+					<a href="/about">about</a> | 
+					<a href="/faq">faq</a> | 
+					<a href="/contact">contact</a> | 
+					<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a><br/>
+					<small><em><a href="http://github.com/alvinsj/credibility">open sourced</a>. tribute to <a href="http://www.rememberaaronsw.com">@aaronsw</a>.</em></small>
+					
+				</div>
 			</div>
 		</div>
-	</div>
-</footer>
-<a title="Real Time Web Analytics" href="http://clicky.com/100597051"><img style="display:none" alt="Real Time Web Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
-<script type="text/javascript">
-var clicky_site_ids = clicky_site_ids || [];
-clicky_site_ids.push(100597051);
-(function() {
-  var s = document.createElement('script');
-  s.type = 'text/javascript';
-  s.async = true;
-  s.src = '//static.getclicky.com/js';
-  ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
-})();
-</script>
+	</footer>
+
+	<a style="display:none" title="Real Time Web Analytics" href="http://clicky.com/100597051">
+		<img alt="Real Time Web Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" />
+	</a>
+	<script type="text/javascript">
+	var clicky_site_ids = clicky_site_ids || [];
+	clicky_site_ids.push(100597051);
+	(function() {
+	  var s = document.createElement('script');
+	  s.type = 'text/javascript';
+	  s.async = true;
+	  s.src = '//static.getclicky.com/js';
+	  ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
+	})();
+	</script>
+
 </body>
 </html>

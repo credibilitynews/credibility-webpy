@@ -1,0 +1,72 @@
+.logo{
+	padding:5px;
+	border:1px solid white;
+	font-weight:bolder;
+}
+.column{
+	padding-bottom: 20px;
+}
+.column-header{
+	border-bottom: 2px solid #c0c0c0;
+	padding-top:20px;
+}
+.link{
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+header .container{
+	background-color: #e0e0e0;
+	margin-top: 10px;
+}
+header .container .row{
+	padding:5px;
+}
+footer .container{
+	border-top:1px solid #c0c0c0;
+	clear:both;
+	padding-top: 10px;
+}
+strong.wrong{
+	margin-left: 10px;
+	font-size:10pt;
+	color:red;
+	font-weight: normal;	
+}
+body{
+	font-family:Verdana, Arial, sans-serif;
+	font-size: 10pt;
+}
+
+/*a, a:link{
+	color:#333;
+}
+a:visited{
+	color:#000;
+}
+
+.link a, a:link{
+	color:#828282;
+}
+.link a:visited{
+	color:#000;
+}*/
+
+header a strong, header strong a:link{
+	color:#333;
+}
+header strong a:visited{
+	color:#000;
+}
+
+label{
+	text-align:right;
+}
+ul{
+	list-style:none;
+}
+input{
+	font-size:10pt;
+}
+em.info{
+	font-size: smaller;
+}
