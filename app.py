@@ -318,6 +318,7 @@ class new_topic:
     else:
       topic = Topic(title=i.title, hashtag=i.hashtag, user_id=session.user.id)
       db.session.add(topic)
+      topic.views = 0
       db.session.commit()
 
       web.seeother('/topic/%d' % topic.id)
