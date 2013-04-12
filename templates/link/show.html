@@ -9,7 +9,7 @@ $var title: <a href="/topic/$link.topic_id/upvote"><i class="icon-arrow-up"></i>
 				<a href="$link.url" style="color:black">$link.title</a> <em class="info">($short(link.url))</em>
 			<div class="info">
 				<small style="color:gray">
-					<a href="/link/$link.id/upvote"><i class="icon-arrow-up"></i></a> | $link.points points by $link.user.name $pretty_date(link.created_at) | $link.comments_count comments
+					<a href="/link/$link.id/upvote"><i class="icon-arrow-up"></i></a> | $link.points votes by $link.user.name $pretty_date(link.created_at) | $link.comments_count comments, $link.views views
 				</small>
 			</div>
 		</div>
@@ -24,6 +24,7 @@ $var title: <a href="/topic/$link.topic_id/upvote"><i class="icon-arrow-up"></i>
 		
 		
 		<h5>Comments</h5>
+		<small><em>Login and add your comment here.</em></small>	
 		<ul>
 			$for c in link.comments
 				<li>
@@ -38,7 +39,6 @@ $var title: <a href="/topic/$link.topic_id/upvote"><i class="icon-arrow-up"></i>
 					
 				</div>
 				</li>
-
 		</ul>
 	</div>
 </div>

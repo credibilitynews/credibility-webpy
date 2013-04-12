@@ -29,6 +29,8 @@ urls = (
   # link
   '/link/(\d+)', 'link',  # add base story
   '/link/(\d+)/upvote', 'upvote_link',  # add base story
+  '/link/(\d+)/view', 'view_link',  # add base story
+
 
   '/comment/(\d+)/upvote', 'upvote_comment',  # add base story
 
@@ -334,7 +336,29 @@ class topic:
 
   def GET(self, id):
     render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr, 'short': shorten_link, 'pretty_date': pretty_date })
+    
+    t = self.topic(id)
+    db.session.query(Topic).filter_by(id=id).update({'views':t.views+1})
+
     return render.topic.show(id, self.topic(id))
+
+
+
+
+
+
+
+
+## view link 
+class view_link:
+  def link(self, id):
+    return db.session.query(Link).filter_by(id=id).first()
+
+  def GET(self, id):
+    l = self.link(id)
+    db.session.query(Link).filter_by(id=id).update({'views':l.views+1})
+
+    return web.seeother(l.url)
 
 
 

@@ -17,11 +17,11 @@ $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><
 			$for s in topic.base_stories:
 				<li>
 					<div class="link" style="clear:both">
-						<a href="$s.url">$s.title</a> <em class="info"> ($short(s.url)) </em>
+						<a href="/link/$s.id/view">$s.title</a> <em class="info"> ($short(s.url)) </em>
 						<div class="info">
 							<small style="pull-right">
-								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> | $s.points points by $s.user.name $pretty_date(s.created_at) | 
-								<a href="/link/$s.id"> $s.comments_count comments</a>
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> | $s.points votes by $s.user.name $pretty_date(s.created_at) | 
+								<a href="/link/$s.id"> $s.comments_count comments</a>, $s.views views
 							</small>
 						</div>
 					</div>
@@ -50,7 +50,7 @@ $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><
 						<a href="$s.url">$s.title</a> <em class="info">($short(s.url))</em>
 						<div class="info">
 							<small style="pull-right">
-								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> | $s.points points by $s.user.name $pretty_date(s.created_at) | <a class="link" href="/link/$s.id">$s.comments_count comments</a>
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> | $s.points votes by $s.user.name $pretty_date(s.created_at) | <a class="link" href="/link/$s.id">$s.comments_count comments</a>, $s.views views
 							</small>
 						</div>
 					</div>

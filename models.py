@@ -52,6 +52,7 @@ class Topic(Base):
   active = Column(Boolean, default=True)
   created_at = Column(DateTime) 
   updated_at = Column(DateTime) 
+  views = Column(Integer) 
 
   user = relationship("User")
 
@@ -129,6 +130,7 @@ class Link(Base):
   active = Column(Boolean, default=True)
   created_at = Column(DateTime) 
   updated_at = Column(DateTime) 
+  views = Column(Integer) 
 
   user = relationship("User")
   topic = relationship("Topic")
