@@ -317,8 +317,8 @@ class new_topic:
       return render.topic.new(form)
     else:
       topic = Topic(title=i.title, hashtag=i.hashtag, user_id=session.user.id)
-      db.session.add(topic)
       topic.views = 0
+      db.session.add(topic)
       db.session.commit()
 
       web.seeother('/topic/%d' % topic.id)
@@ -358,6 +358,7 @@ class view_link:
   def GET(self, id):
     l = self.link(id)
     db.session.query(Link).filter_by(id=id).update({'views':l.views+1})
+    db.session.commit()
 
     return web.seeother(l.url)
 
@@ -445,6 +446,7 @@ class new_base_link:
       return render.link.new(form,id)
     else:
       link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=1)
+      link.views = 0
       db.session.add(link)
       db.session.commit()
 
