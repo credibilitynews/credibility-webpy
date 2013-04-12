@@ -392,6 +392,8 @@ class upvote_topic:
 
 
 
+
+
 ## new base link
 class new_base_link:
   def not_link_exists(url):
