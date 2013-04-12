@@ -9,7 +9,7 @@ $var title: <a href="/topic/$link.topic_id/upvote"><i class="icon-arrow-up"></i>
 				<a href="$link.url" style="color:black">$link.title</a> <em class="info">($short(link.url))</em>
 			<div class="info">
 				<small style="color:gray">
-					<a href="/link/$link.id/upvote"><i class="icon-arrow-up"></i></a> | $link.points votes by $link.user.name $pretty_date(link.created_at) | $link.comments_count comments, $link.views views
+					<a href="/link/$link.id/upvote"><i class="icon-arrow-up"></i></a> $link.points votes | added by $link.user.name $pretty_date(link.created_at) | $link.comments_count comments, $link.views views
 				</small>
 			</div>
 		</div>
