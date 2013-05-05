@@ -317,7 +317,7 @@ class new_topic:
       return render.topic.new(form)
     else:
       topic = Topic(title=i.title, hashtag=i.hashtag, user_id=session.user.id)
-      topic.views = 0
+      topic.views = 1
       db.session.add(topic)
       db.session.commit()
 
@@ -448,7 +448,7 @@ class new_base_link:
       return render.link.new(form,id)
     else:
       link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=1)
-      link.views = 0
+      link.views = 1
       db.session.add(link)
       db.session.commit()
 
