@@ -71,6 +71,9 @@ ul{
 input{
 	font-size:10pt;
 }
+.info{
+	margin-top:2px;
+}
 em.info{
 	font-size: smaller;
 }

@@ -5,61 +5,88 @@ $var menu:
 $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><a href="/topic/$topic.id">$topic.hashtag</a>
 
 <!-- base stories -->
-<div class="span6 column" >
+<div class="span4 column" style="background-color:aliceblue">
 	<div style="margin:5px">
 		<div class="column-header">
-			<strong>Base stories</strong>
+			<strong>Left-sided Stories</strong>
 			<div>
-				<p class="pull-left"><em>$len(topic.base_stories) story links</em></p>
-				<a class="pull-right" href="/topic/$id/base/new">submit</a>
+				<p class="pull-left"><em>$len(topic.left_stories) story links</em></p>
+				<a class="pull-right" href="/topic/$id/left/new">submit</a>
 			</div>	
 			<div style="clear:both"></div>
 		</div>	
 		<ol>
-			$for s in topic.base_stories:
+			$for s in topic.left_stories:
 				<li>
 					<div class="link" style="clear:both">
-						<a href="/link/$s.id/view">$s.title</a> <em class="info"> ($short(s.url)) </em>
+						<a href="/link/$s.id/view">$s.title</a><br/><em class="info"> ($short(s.url)) - @$s.user.name $pretty_date(s.created_at)</em>
 						<div class="info">
 							<small style="pull-right">
-								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.points votes | added by $s.user.name $pretty_date(s.created_at) | 
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes votes | 
 								<a href="/link/$s.id"> $s.comments_count comments</a>, $s.views views
 							</small>
 						</div>
 					</div>
 				</li>	
 		</ol>
-		$if len(topic.base_stories) == 0:
-			<div><em>No story submitted yet. <a href="/topic/$id/base/new">Submit one</a></em></div>
+		$if len(topic.left_stories) == 0:
+			<div><em>No story submitted yet. <a href="/topic/$id/left/new">Submit one</a></em></div>
 	</div>
 </div>
-
+<div class="span4 column">
+  <div style="margin:5px;">
+    <div class="column-header">
+      <strong>Fact-based News</strong>
+      <div>
+        <p class="pull-left"><em>0 story links</em></p>
+        <a class="pull-right" href="/topic/$id/fact/new">submit</a>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+    <ol>
+			$for s in topic.fact_stories:
+				<li>
+					<div class="link" style="clear:both">
+						<a href="/link/$s.id/view">$s.title</a><br/><em class="info"> ($short(s.url)) - @$s.user.name $pretty_date(s.created_at)</em>
+						<div class="info">
+							<small style="pull-right">
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes votes | 
+								<a href="/link/$s.id"> $s.comments_count comments</a>, $s.views views
+							</small>
+						</div>
+					</div>
+				</li>	
+		</ol>
+		$if len(topic.fact_stories) == 0:
+			<div><em>No story submitted yet. <a href="/topic/$id/fact/new">Submit one</a></em></div>
+  </div>
+</div>
 <!-- alternate stories -->
-<div class="span6 column" style="background-color:#f1f1f1">
+<div class="span4 column" style="background-color:whitesmoke">
 	<div style="margin:5px;">
 		<div class="column-header">
-			<strong>Alternative stories</strong>
+			<strong>Right-sided Stories</strong>
 			<div >
-					<p class="pull-left"><em>$len(topic.alt_stories) story links</em></p>
-					<a class="pull-right" href="/topic/$id/alt/new">submit</a>
+					<p class="pull-left"><em>$len(topic.right_stories) story links</em></p>
+					<a class="pull-right" href="/topic/$id/right/new">submit</a>
 			</div>
 			<div style="clear:both"></div>
 		</div>
 		<ol>
-			$for s in topic.alt_stories:
+			$for s in topic.right_stories:
 				<li>
 					<div class="link" style="clear:both">
-						<a href="/link/$s.id/view">$s.title</a> <em class="info">($short(s.url))</em>
+						<a href="/link/$s.id/view">$s.title</a><br/><em class="info">($short(s.url)) -  @$s.user.name $pretty_date(s.created_at)</em>
 						<div class="info">
 							<small style="pull-right">
-								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.points votes | added by $s.user.name $pretty_date(s.created_at) | <a class="link" href="/link/$s.id">$s.comments_count comments</a>, $s.views views
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes votes | <a class="link" href="/link/$s.id">$s.comments_count comments</a>, $s.views views
 							</small>
 						</div>
 					</div>
 				</li>
 			</ol>
-			$if len(topic.alt_stories) == 0:
-				<div><em>No story submitted yet. <a href="/topic/$id/alt/new">Submit one</a></em></div>
+			$if len(topic.right_stories) == 0:
+				<div><em>No story submitted yet. <a href="/topic/$id/right/new">Submit one</a></em></div>
 				
 	</div>
 </div>

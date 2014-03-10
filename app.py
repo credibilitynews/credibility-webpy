@@ -4,11 +4,11 @@ import db
 import re
 
 from pretty_date import pretty_date
+
 from models import *
-
-
-
-
+from models.topic import Topic, TopicVote
+from models.link import Link, LinkVote
+from models.comment import Comment, CommentVote
 
 ## routes
 urls = (
@@ -23,8 +23,9 @@ urls = (
   '/topic/new', 'new_topic',
   '/topic/(\d+)', 'topic',
   '/topic/(\d+)/upvote', 'upvote_topic', # upvote story
-  '/topic/(\d+)/base/new', 'new_base_link',  # add base story
-  '/topic/(\d+)/alt/new',  'new_alt_link',  # add alt story
+  '/topic/(\d+)/left/new', 'new_left_link',  # add left story
+  '/topic/(\d+)/right/new',  'new_right_link',  # add right story
+  '/topic/(\d+)/fact/new',  'new_fact_link',  # add fact based article
 
   # link
   '/link/(\d+)', 'link',  # add base story
@@ -66,9 +67,9 @@ def shorten_link(link):
         except ValueError:
             n = len(l[0])
 
-        return l[0][:n]
+        return l[0][:n].replace("www.", "")
     else:
-        return link
+        return link.replace("www.", "")
 
 ## app setup
 app = web.application(urls, globals())
@@ -394,8 +395,8 @@ class upvote_topic:
 
 
 
-## new base link
-class new_base_link:
+## new left link
+class new_left_link:
     def not_link_exists(url):
         link = db.session.query(Link).filter_by(url=url).first()
         if not link:
@@ -415,7 +416,7 @@ class new_base_link:
         web.form.Textbox('url', web.form.notnull, vlink, link_exists_validator,
             size=30,
             description="url:"),
-        web.form.Button('add base story link'),
+        web.form.Button('add left-sided story link'),
     )
 
     def GET(self, id):
@@ -460,8 +461,8 @@ class new_base_link:
 
 
 
-## new alternative story link
-class new_alt_link:
+## new fact story link
+class new_fact_link:
     def not_link_exists(url):
         link = db.session.query(Link).filter_by(url=url).first()
         if not link:
@@ -480,7 +481,69 @@ class new_alt_link:
         web.form.Textbox('url', web.form.notnull, vlink, link_exists_validator,
             size=30,
             description="url:"),
-        web.form.Button('add alternative story link'),
+        web.form.Button('add fact-based news link'),
+    )
+
+    def GET(self, id):
+        username = None
+        if hasattr(session, 'username'):
+            username = session.username
+        else:
+            return web.seeother('/register')
+
+        url = web.input(url='').url
+        form = self.form()
+        form.fill({'url':url})
+
+        render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
+        return render.link.new(form,id)
+
+    def POST(self, id):
+        username = None
+        if hasattr(session, 'username'):
+            username = session.username
+        else:
+            return web.seeother('/register')
+
+        i = web.input()
+
+        form = self.form()
+        render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
+
+        if not form.validates():
+            return render.link.new(form, id)
+        else:
+            link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=0)
+            db.session.add(link)
+            db.session.commit()
+
+            return web.seeother('/topic/%d' % int(id))
+
+
+
+
+
+## new right sided story link
+class new_right_link:
+    def not_link_exists(url):
+        link = db.session.query(Link).filter_by(url=url).first()
+        if not link:
+            return True
+        else:
+            return False
+
+    link_exists_validator = web.form.Validator('Link already exists',
+                                  not_link_exists)
+    vlink = web.form.regexp(r"https?://.+\..+", "must be a valid url start with http(s)")
+
+    form = web.form.Form(
+        web.form.Textbox('title', web.form.notnull,
+            size=30,
+            description="title:"),
+        web.form.Textbox('url', web.form.notnull, vlink, link_exists_validator,
+            size=30,
+            description="url:"),
+        web.form.Button('add right sided story link'),
     )
 
     def GET(self, id):
@@ -518,8 +581,7 @@ class new_alt_link:
 
             return web.seeother('/topic/%d' % int(id))
 
-
-
+    
 
 
 
