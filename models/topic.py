@@ -5,6 +5,8 @@ from models.base_extension import TimestampExtension
 from models import Base 
 from models.user import User
 from models.link import Link, LinkVote
+from models.category import Category
+from models.tag import topic_tags_association_table
 
 from datetime import datetime
 import time
@@ -24,6 +26,7 @@ class Topic(Base):
     views = Column(Integer)
 
     user = relationship("User")
+    tags = relationship("Tag", secondary=topic_tags_association_table, backref="topics")
 
     def __init__(self, title, hashtag, user_id):
         self.title = title

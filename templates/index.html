@@ -1,25 +1,59 @@
-$def with (topics)
+$def with (tags, topics)
 $var menu: <a href="/topic/new">submit</a>
 $var title: 
-<!-- base stories -->
-<div class="span12 column" >
-	<div style="margin:5px">	
-		<strong style="line-height:20pt">Click on a topic to read its story links:</strong>
-		<ol>
-		$for t in topics:
-			<li>
-			<div class="topic" style="clear:both">
-				<a href="/topic/$t.id">$t.title</a> <em class="info">$t.hashtag</em> 
-				<div class="info">
-					<small style="color:gray">
-						 <a href="/topic/$t.id/upvote"><i class="icon-arrow-up"></i></a> $t.votes votes | added by $t.user.name $pretty_date(t.created_at) | $t.story_count stories, $t.views views
-					</small>
-				</div>
-			</div>	
+
+<div class="span3 column">
+	<div style="margin-top:10px">
+		<ul class="nav nav-list bs-docs-sidenav affix">
+			$for tag in tags:
+				<li>
+				$if len(tag.children) > 0:
+					<a href="/tagged/$tag.code">
+						<i class="icon-chevron-right"></i> $tag.name
+					</a>
+					<ul>
+					$for child in tag.children:
+						<li>
+							<a href="/tagged/$child.code">
+								<i class="icon-chevron-right"></i> $child.name
+							</a>
+						</li>
+					</ul>
+				$elif (tag.parent is None):
+					<a href="/tagged/$tag.code">
+						<i class="icon-chevron-right"></i> $tag.name
+					</a>
 			</li>
-		
-		</ol>
-		
+	  </ul>
+  </div>
+</div>
+
+<!-- base stories -->
+<div class="span9 column" >
+	<div style="margin-top:10px">	
+		<em class="pull-right">Click on a topic to read its story links.</em>
+		$for key, tagged in topics.items():
+			$if (tagged is None) or (len(tagged) == 0):
+				$continue
+			$else:
+				<section class="category">
+					<strong>$key.name</strong>
+					<ol>
+						$for topic in tagged:	
+							<li>
+								<div class="topic" style="clear:both">
+								
+									<a href="/topic/$topic.id">$topic.title</a> <em class="info">$topic.hashtag</em> 
+									<div class="info">
+										<small style="color:gray">
+											 <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a> $topic.votes votes | added by $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views
+										</small>
+									</div>
+								</div>	
+							</li>
+					</ol>
+				</section>
+			<div><a href="#">..more on $key.name</a></div>
 	</div>
 </div>
 

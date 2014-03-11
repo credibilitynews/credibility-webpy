@@ -2,10 +2,12 @@ import hashlib
 import web
 import db
 import re
+import collections
 
 from pretty_date import pretty_date
 
 from models import *
+from models.tag import Tag
 from models.topic import Topic, TopicVote
 from models.link import Link, LinkVote
 from models.comment import Comment, CommentVote
@@ -93,12 +95,18 @@ class favicon:
 
 
 
-
-
+import operator
 ## home page
 class index:
+    def all_tags(self):
+        return sorted(db.session.query(Tag).all(), cmp=lambda x,y: cmp(x.name, y.name))
+
     def all_topics(self):
-        return db.session.query(Topic).all()
+        topics = {}
+        for tag in self.all_tags():
+            topics[tag] = sorted(tag.topics, key=lambda topic: topic.points, reverse=True)
+        return collections.OrderedDict(sorted(topics.items()))
+
 
     def GET(self):
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
@@ -106,10 +114,10 @@ class index:
         if hasattr(session,'username'):
             username = session.username
 
-        topics = self.all_topics()
-        topics = sorted(topics, key=lambda topic: topic.points, reverse=True)
+        topics = self.all_topics()        
+        tags = self.all_tags()
 
-        return render.index(topics)
+        return render.index(tags, topics)
 
 
 
