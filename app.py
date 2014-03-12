@@ -11,6 +11,7 @@ from models.tag import Tag
 from models.topic import Topic, TopicVote
 from models.link import Link, LinkVote
 from models.comment import Comment, CommentVote
+from sqlalchemy import desc
 
 ## routes
 urls = (
@@ -107,9 +108,11 @@ class index:
     def all_topics(self):
         topics = {}
         for tag in self.all_tags():
-            topics[tag] = sorted(tag.topics, key=lambda topic: topic.points, reverse=True)[:5]
+            topics[tag] = sorted(tag.topics, key=lambda topic: topic.points, reverse=True)[:3]
         return collections.OrderedDict(sorted(topics.items()))
-
+   
+    def latest_topics(self):
+        return db.session.query(Topic).order_by(desc(Topic.created_at)).limit(3)
 
     def GET(self):
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
@@ -119,8 +122,9 @@ class index:
 
         topics = self.all_topics()        
         tags = self.all_tags()
-
-        return render.index(tags, topics)
+        latest_topics = self.latest_topics()
+         
+        return render.index(tags, topics, latest_topics)
 
 
 

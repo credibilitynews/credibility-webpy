@@ -82,3 +82,6 @@ select, input{
 em.info{
 	font-size: smaller;
 }
+section.category {
+	margin-bottom:30px;
+}

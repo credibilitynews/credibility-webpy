@@ -1,4 +1,4 @@
-$def with (tags, topics)
+$def with (tags, topics, latest_topics)
 $var menu: <a href="/topic/new">submit topic</a>
 $var title: 
 
@@ -34,6 +34,22 @@ $var title:
 <div class="span9 column" >
 	<div style="margin-top:10px">	
 		<em class="pull-right">Click a topic to start reading.</em>
+		<section class="category">
+			<h4>Latest Topics</h4>
+	    <ol>
+				$for topic in latest_topics:	
+					<li>
+						<div class="topic" style="clear:both">						
+							<a href="/topic/$topic.id">$topic.title</a> <em class="info">$topic.hashtag</em> 
+							<div class="info">
+								<small style="color:gray">
+									 <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a> $topic.votes votes | added by $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views
+								</small>
+							</div>
+						</div>	
+					</li>
+			</ol>
+		</section>
 		$for key, tagged in topics.items():
 			$if (tagged is None) or (len(tagged) == 0):
 				$continue
@@ -54,8 +70,8 @@ $var title:
 								</div>	
 							</li>
 					</ol>
+					<div><a href="/tagged/$key.code">..more on $key.name</a></div>
 				</section>
-			<div><a href="/tagged/$key.code">..more on $key.name</a></div>
 	</div>
 </div>
 
