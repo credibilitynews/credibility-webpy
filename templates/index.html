@@ -4,7 +4,8 @@ $var title:
 
 <div class="span3 column">
 	<div style="margin-top:10px">
-		<ul class="nav nav-list bs-docs-sidenav affix">
+    <h5>Tags</h5>
+		<ul class="nav nav-list">
 			$for tag in tags:
 				<li>
 				$if len(tag.children) > 0:
@@ -26,18 +27,19 @@ $var title:
 			</li>
 	  </ul>
   </div>
+  <div style="clear:both"></div>
 </div>
 
 <!-- base stories -->
 <div class="span9 column" >
 	<div style="margin-top:10px">	
-		<em class="pull-right">Click on a topic to read its story links.</em>
+		<em class="pull-right">Click a topic to start reading.</em>
 		$for key, tagged in topics.items():
 			$if (tagged is None) or (len(tagged) == 0):
 				$continue
 			$else:
 				<section class="category">
-					<strong>$key.name</strong>
+					<h4>$key.name</h4>
 					<ol>
 						$for topic in tagged:	
 							<li>

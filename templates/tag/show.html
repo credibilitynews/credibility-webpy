@@ -4,7 +4,8 @@ $var title:
 
 <div class="span3 column">
 	<div style="margin-top:10px">
-		<ul class="nav nav-list bs-docs-sidenav affix">
+    <h5>Tags</h5>
+		<ul class="nav nav-list">
 			$for tag in tags:
 				<li>
 				$if len(tag.children) > 0:
@@ -31,9 +32,9 @@ $var title:
 <!-- base stories -->
 <div class="span9 column" >
 	<div style="margin-top:10px">	
-		<em class="pull-right">Click on a topic to read its story links.</em>	
+    <em class="pull-right">Click a topic to start reading.</em>	
 				<section class="category">
-					<strong>$tagged.name</strong>
+					<h4>$tagged.name</h4>
 					<ol>
 						$for topic in topics:
 							<li>
