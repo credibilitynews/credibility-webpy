@@ -22,7 +22,8 @@ class Tag(Base):
 
     children = relationship("Tag")
     parent = relationship("Tag", remote_side=[id])
-
+    topics = relationship("Topic", secondary=topic_tags_association_table, lazy='dynamic')
+    
     def __init__(self, name, code, parent_id):
         self.name = name
         self.code = code

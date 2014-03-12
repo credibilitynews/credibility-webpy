@@ -26,7 +26,7 @@ class Topic(Base):
     views = Column(Integer)
 
     user = relationship("User")
-    tags = relationship("Tag", secondary=topic_tags_association_table, backref="topics")
+    tags = relationship("Tag", secondary=topic_tags_association_table)
 
     def __init__(self, title, hashtag, user_id):
         self.title = title

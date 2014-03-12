@@ -1,4 +1,4 @@
-$def with (tags, topics)
+$def with (id, tags, tagged, topics)
 $var menu: <a href="/topic/new">submit topic</a>
 $var title: 
 
@@ -31,15 +31,11 @@ $var title:
 <!-- base stories -->
 <div class="span9 column" >
 	<div style="margin-top:10px">	
-		<em class="pull-right">Click on a topic to read its story links.</em>
-		$for key, tagged in topics.items():
-			$if (tagged is None) or (len(tagged) == 0):
-				$continue
-			$else:
+		<em class="pull-right">Click on a topic to read its story links.</em>	
 				<section class="category">
-					<strong>$key.name</strong>
+					<strong>$tagged.name</strong>
 					<ol>
-						$for topic in tagged:	
+						$for topic in topics:
 							<li>
 								<div class="topic" style="clear:both">
 								
@@ -53,7 +49,6 @@ $var title:
 							</li>
 					</ol>
 				</section>
-			<div><a href="/tagged/$key.code">..more on $key.name</a></div>
 	</div>
 </div>
 

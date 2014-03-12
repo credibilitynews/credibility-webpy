@@ -21,6 +21,9 @@ urls = (
   '/logout', 'logout',
   '/user/(\d+)', 'user',
 
+  # tag
+  '/tagged/(.+)', 'tag',
+
   # topic
   '/topic/new', 'new_topic',
   '/topic/(\d+)', 'topic',
@@ -104,7 +107,7 @@ class index:
     def all_topics(self):
         topics = {}
         for tag in self.all_tags():
-            topics[tag] = sorted(tag.topics, key=lambda topic: topic.points, reverse=True)
+            topics[tag] = sorted(tag.topics, key=lambda topic: topic.points, reverse=True)[:5]
         return collections.OrderedDict(sorted(topics.items()))
 
 
@@ -123,8 +126,28 @@ class index:
 
 
 
+## tag
+class tag:
+    def tag(self, code):
+        return db.session.query(Tag).filter_by(code=code).first()
 
+    def all_tags(self):
+        return sorted(db.session.query(Tag).all(), cmp=lambda x,y: cmp(x.name, y.name))
 
+    def GET(self, code):
+        render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr, 'short': shorten_link, 'pretty_date': pretty_date })
+        tags = self.all_tags()
+        tag = self.tag(code)
+        topics = tag.topics[:]
+        if len(tag.children) > 0:
+            child_topics = map(self.child_topics, tag.children) 
+            child_topics = reduce(lambda x,y: x+y, child_topics)
+            topics = sorted(topics + child_topics, key=lambda topic: topic.points, reverse=True)
+        return render.tag.show(id, tags, tag, topics)
+    
+    def child_topics(self, child):
+        topics = child.topics[:]
+        return topics
 
 ## logout
 class logout :
