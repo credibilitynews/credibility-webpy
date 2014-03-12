@@ -298,6 +298,9 @@ class new_topic:
             return True
         else:
             return False
+    
+    def all_tags(self=None):
+        return sorted(db.session.query(Tag).all(), cmp=lambda x,y: cmp(x.name, y.name))
 
     title_exists_validator = web.form.Validator('Title already exists',
                                   not_title_exists)
@@ -314,6 +317,8 @@ class new_topic:
             size=30,
             placeholder="#topic_hashtag",
             description="hashtag:"),
+        web.form.Dropdown('tag', map(lambda tag: (tag.id, tag.name), all_tags()),
+            description="main category:"), 
         web.form.Button('Create topic'),
     )
 
@@ -350,6 +355,8 @@ class new_topic:
         else:
             topic = Topic(title=i.title, hashtag=i.hashtag, user_id=session.user.id)
             topic.views = 1
+            tag = db.session.query(Tag).get(i.tag)
+            topic.tags.append(tag)
             db.session.add(topic)
             db.session.commit()
 

@@ -72,8 +72,9 @@ label{
 ul{
 	list-style:none;
 }
-input{
+select, input{
 	font-size:10pt;
+  height: 20px;
 }
 .info{
 	margin-top:2px;
