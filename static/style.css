@@ -45,20 +45,6 @@ body{
 	font-size: 10pt;
 }
 
-/*a, a:link{
-	color:#333;
-}
-a:visited{
-	color:#000;
-}
-
-.link a, a:link{
-	color:#828282;
-}
-.link a:visited{
-	color:#000;
-}*/
-
 header a strong, header strong a:link{
 	color:#333;
 }
@@ -71,10 +57,6 @@ label{
 }
 ul{
 	list-style:none;
-}
-select, input{
-	font-size:10pt;
-  height: 20px;
 }
 .info{
 	margin-top:2px;

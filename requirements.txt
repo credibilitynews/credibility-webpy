@@ -4,3 +4,5 @@ psycopg2==2.4.6
 virtualenv==1.9.1
 web.py==0.37
 wsgiref==0.1.2
+BeautifulSoup==3.2.1
+requests==2.2.1

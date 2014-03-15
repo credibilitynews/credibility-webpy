@@ -33,6 +33,9 @@ urls = (
   '/topic/(\d+)/right/new',  'new_right_link',  # add right story
   '/topic/(\d+)/fact/new',  'new_fact_link',  # add fact based article
 
+  # title
+  '/suggest/title', 'suggest_title',
+
   # link
   '/link/(\d+)', 'link',  # add base story
   '/link/(\d+)/upvote', 'upvote_link',  # add base story
@@ -96,6 +99,29 @@ else:
 class favicon:
     def GET(self):
         raise web.redirect('/static/favicon.ico')
+
+
+import json
+import requests
+from bs4 import BeautifulSoup
+## suggest title for url
+class suggest_title: 
+    def title_from_url(self, url):
+        try:
+            page = requests.get(url, verify=True)
+            text = page.content
+            return BeautifulSoup(text).title.string.strip()
+        except:
+            return ''
+            
+    def GET(self):
+        data = web.input() 
+        if 'url' not in data: 
+            return json.dumps({'error': 'url param is missing'})        
+        else:
+            title = self.title_from_url(data['url'])
+            return json.dumps({'title': title.encode('utf-8') })
+
 
 
 
@@ -454,10 +480,13 @@ class new_left_link:
     form = web.form.Form(
         web.form.Textbox('title', web.form.notnull,
             size=30,
-            description="title:"),
+            description="title:",
+            **{'ng-model': "title"}),
         web.form.Textbox('url', web.form.notnull, vlink, link_exists_validator,
             size=30,
-            description="url:"),
+            description="url:",
+            **{'ng-model': 'url', 
+            'ng-change': "suggestTitle()"}),
         web.form.Button('add left-sided story link'),
     )
 
