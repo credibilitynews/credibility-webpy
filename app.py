@@ -500,9 +500,9 @@ class new_left_link:
         url = web.input(url='').url
         form = self.form()
         form.fill({'url':url})
-
+        path = '/topic/'+id+'/left/new'
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
-        return render.link.new(form, id)
+        return render.link.new(form, id, path)
 
     def POST(self, id):
         username = None
@@ -517,7 +517,8 @@ class new_left_link:
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
         if not form.validates():
-            return render.link.new(form,id)
+            path = '/topic/'+id+'/left/new'
+            return render.link.new(form,id,path)
         else:
             link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=1)
             link.views = 1
@@ -568,9 +569,10 @@ class new_fact_link:
         url = web.input(url='').url
         form = self.form()
         form.fill({'url':url})
+        path = '/topic/'+id+'/fact/new'
 
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
-        return render.link.new(form,id)
+        return render.link.new(form,id,path)
 
     def POST(self, id):
         username = None
@@ -585,7 +587,8 @@ class new_fact_link:
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
         if not form.validates():
-            return render.link.new(form, id)
+            path = '/topic/'+id+'/fact/new'
+            return render.link.new(form, id, path)
         else:
             link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=0)
             db.session.add(link)
@@ -633,9 +636,9 @@ class new_right_link:
         url = web.input(url='').url
         form = self.form()
         form.fill({'url':url})
-
+        path = '/topic/'+id+'/right/new'
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
-        return render.link.new(form,id)
+        return render.link.new(form,id,path)
 
     def POST(self, id):
         username = None
@@ -650,7 +653,8 @@ class new_right_link:
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
 
         if not form.validates():
-            return render.link.new(form, id)
+            path = '/topic/'+id+'/right/new'
+            return render.link.new(form, id, path)
         else:
             link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=2)
             db.session.add(link)
