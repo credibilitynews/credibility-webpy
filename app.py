@@ -548,10 +548,13 @@ class new_fact_link:
     form = web.form.Form(
         web.form.Textbox('title', web.form.notnull,
             size=30,
-            description="title:"),
+            description="title:",
+            **{'ng-model': "title"}),
         web.form.Textbox('url', web.form.notnull, vlink, link_exists_validator,
             size=30,
-            description="url:"),
+            description="url:",
+            **{'ng-model': 'url', 
+            'ng-change': "suggestTitle()"}),
         web.form.Button('add fact-based news link'),
     )
 
@@ -610,10 +613,13 @@ class new_right_link:
     form = web.form.Form(
         web.form.Textbox('title', web.form.notnull,
             size=30,
-            description="title:"),
+            description="title:",
+            **{'ng-model': "title"}),
         web.form.Textbox('url', web.form.notnull, vlink, link_exists_validator,
             size=30,
-            description="url:"),
+            description="url:",
+            **{'ng-model': 'url', 
+            'ng-change': "suggestTitle()"}),
         web.form.Button('add right sided story link'),
     )
 
