@@ -591,6 +591,7 @@ class new_fact_link:
             return render.link.new(form, id, path)
         else:
             link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=0)
+            link.views = 1
             db.session.add(link)
             db.session.commit()
 
@@ -657,6 +658,7 @@ class new_right_link:
             return render.link.new(form, id, path)
         else:
             link = Link(title=i.title, url=i.url, topic_id=id, user_id=session.user.id, type=2)
+            link.views = 1
             db.session.add(link)
             db.session.commit()
 
