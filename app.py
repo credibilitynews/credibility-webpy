@@ -24,6 +24,7 @@ urls = (
 
   # tag
   '/tagged/(.+)', 'tag',
+  '/latest', 'latest',
 
   # topic
   '/topic/new', 'new_topic',
@@ -138,7 +139,10 @@ class index:
         return collections.OrderedDict(sorted(topics.items()))
    
     def latest_topics(self):
-        return db.session.query(Topic).order_by(desc(Topic.created_at)).limit(3)
+        return db.session.query(Topic).order_by(desc(Topic.created_at)).limit(5)
+
+    def latest_articles(self):
+        return db.session.query(Link).order_by(desc(Link.created_at)).limit(5)
 
     def GET(self):
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr,'pretty_date':pretty_date})
@@ -149,8 +153,9 @@ class index:
         topics = self.all_topics()        
         tags = self.all_tags()
         latest_topics = self.latest_topics()
+        latest_articles = self.latest_articles()
          
-        return render.index(tags, topics, latest_topics)
+        return render.index(tags, topics, latest_topics, latest_articles)
 
 
 
@@ -164,6 +169,10 @@ class tag:
     def all_tags(self):
         return sorted(db.session.query(Tag).all(), cmp=lambda x,y: cmp(x.name, y.name))
 
+    def child_topics(self, child):
+        topics = child.topics[:]
+        return topics
+
     def GET(self, code):
         render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr, 'short': shorten_link, 'pretty_date': pretty_date })
         tags = self.all_tags()
@@ -175,9 +184,24 @@ class tag:
             topics = sorted(topics + child_topics, key=lambda topic: topic.points, reverse=True)
         return render.tag.show(id, tags, tag, topics)
     
-    def child_topics(self, child):
-        topics = child.topics[:]
-        return topics
+
+
+
+#latest
+class latest:
+    def all_tags(self):
+        return sorted(db.session.query(Tag).all(), cmp=lambda x,y: cmp(x.name, y.name))
+
+    def latest_topics(self):
+        return db.session.query(Topic).order_by(desc(Topic.created_at)).limit(10)
+ 
+    def GET(self):
+        render = web.template.render('templates/', base='layout', globals={'session':session, 'hasattr':hasattr, 'short': shorten_link, 'pretty_date': pretty_date })
+        tags = self.all_tags()
+        tag = type('Tag', (object,), { "name": "Latest Topics"})
+        topics = self.latest_topics()
+        return render.tag.show(id, tags, tag, topics)
+
 
 ## logout
 class logout :

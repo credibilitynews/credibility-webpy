@@ -1,11 +1,18 @@
-$def with (tags, topics, latest_topics)
+$def with (tags, topics, latest_topics, latest_articles)
 $var menu: <a href="/topic/new">submit topic</a>
 $var title: 
+$code
+	count = 0
 
 <div class="span3 column">
 	<div style="margin-top:10px">
     <h5>Tags</h5>
 		<ul class="nav nav-list">
+			<li>
+				<a href="/latest">
+					<i class="icon-chevron-right"></i> Latest Topics
+				</a>
+			</li?
 			$for tag in tags:
 				<li>
 				$if len(tag.children) > 0:
@@ -33,38 +40,63 @@ $var title:
 <!-- base stories -->
 <div class="span9 column" >
 	<div style="margin-top:10px">	
-		<em class="pull-right">Click a topic to start reading.</em>
-		<section class="category">
-			<h4>Latest Topics</h4>
-	    <ol>
-				$for topic in latest_topics:	
-					<li>
-						<div class="topic" style="clear:both">						
-							<a href="/topic/$topic.id">$topic.title</a> <em class="info">$topic.hashtag</em> 
-							<div class="info">
-								<small style="color:gray">
-									 <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a> $topic.votes votes | added by $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views
-								</small>
-							</div>
-						</div>	
-					</li>
-			</ol>
-		</section>
+		<div class="row">
+			<em class="pull-right">Click a topic to start reading.</em>
+		</div>
+		<div class="row">
+			<section class="category span4">
+				<h4>Latest Topics</h4>
+		    <ol>
+					$for topic in latest_topics:	
+						<li>
+							<div class="topic" style="clear:both">						
+								<a href="/topic/$topic.id">$topic.title</a><br/><em class="info">$topic.hashtag</em> <small>($topic.votes<i class="icon-star-empty"></i>)</small>
+								<div class="info">
+									<small style="color:gray">
+										 <em>via $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views</em>
+									</small>
+								</div>
+							</div>	
+						</li>
+				</ol>
+				<div><a href="/latest">..more on Latest Topics</a></div>
+			</section>
+			<section class="category span4">
+				<h4>Latest Articles</h4>
+		    <ol>
+					$for article in latest_articles:	
+						<li>
+							<article class="topic" style="clear:both">		
+								<a href="/link/$article.id">$article.title</a> <small>($article.votes<i class="icon-star-empty"></i>)</small>
+								<div class="info">
+									<small style="color:gray">
+										 <em>via $article.user.name $pretty_date(article.created_at) | $article.views views</em>
+									</small>
+								</div>
+							</article>	
+						</li>
+				</ol>
+			</section>
+		</div>
 		$for key, tagged in topics.items():
 			$if (tagged is None) or (len(tagged) == 0):
 				$continue
 			$else:
-				<section class="category">
+				$if count%2 == 0:
+					<div class="row">
+
+				<section class="category span4">
 					<h4>$key.name</h4>
 					<ol>
 						$for topic in tagged:	
 							<li>
 								<div class="topic" style="clear:both">
-								
-									<a href="/topic/$topic.id">$topic.title</a> <em class="info">$topic.hashtag</em> 
+									<a href="/topic/$topic.id">$topic.title</a><br/><em class="info">$topic.hashtag</em> <small>($topic.votes<i class="icon-star-empty"></i>)</small>
 									<div class="info">
 										<small style="color:gray">
-											 <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a> $topic.votes votes | added by $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views
+											<em>
+											 via $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views
+											</em>
 										</small>
 									</div>
 								</div>	
@@ -72,6 +104,10 @@ $var title:
 					</ol>
 					<div><a href="/tagged/$key.code">..more on $key.name</a></div>
 				</section>
+				$if count%2 == 1:
+					</div>
+				$code
+					count+=1
 	</div>
 </div>
 

@@ -4,6 +4,12 @@ $var metadesc: $topic.title
 $var menu: 
 $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><a href="/topic/$topic.id">$topic.hashtag</a>
 
+
+<div class="span12">
+	<h2>$topic.title</h2><a href="/topic/$topic.id">$topic.hashtag</a>  $topic.votes<a href="/topic/$topic.id/upvote"><i class="icon-star-empty"></i></a></small>
+	<br>
+</div>
+<div class="span12">&nbsp;</div>
 <!-- base stories -->
 <div class="span4 column" style="background-color:aliceblue">
 	<div style="margin:5px">
@@ -18,15 +24,15 @@ $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><
 		<ol>
 			$for s in topic.left_stories:
 				<li>
-					<div class="link" style="clear:both">
-						<a href="/link/$s.id/view">$s.title</a><br/><em class="info"> ($short(s.url)) - @$s.user.name $pretty_date(s.created_at)</em>
+					<article class="link" style="clear:both">
+						<a href="/link/$s.id/view">$s.title</a><br/><em class="info"> ($short(s.url)) - via $s.user.name $pretty_date(s.created_at)</em>
 						<div class="info">
 							<small style="pull-right">
-								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes votes | 
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes <i class="icon-star-empty"></i> | 
 								<a href="/link/$s.id"> $s.comments_count comments</a>, $s.views views
 							</small>
 						</div>
-					</div>
+					</article>
 				</li>	
 		</ol>
 		$if len(topic.left_stories) == 0:
@@ -47,10 +53,10 @@ $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><
 			$for s in topic.fact_stories:
 				<li>
 					<div class="link" style="clear:both">
-						<a href="/link/$s.id/view">$s.title</a><br/><em class="info"> ($short(s.url)) - @$s.user.name $pretty_date(s.created_at)</em>
+						<a href="/link/$s.id/view">$s.title</a><br/><em class="info"> ($short(s.url)) - via $s.user.name $pretty_date(s.created_at)</em>
 						<div class="info">
 							<small style="pull-right">
-								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes votes | 
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes <i class="icon-star-empty"></i> | 
 								<a href="/link/$s.id"> $s.comments_count comments</a>, $s.views views
 							</small>
 						</div>
@@ -76,10 +82,10 @@ $var title: <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a><
 			$for s in topic.right_stories:
 				<li>
 					<div class="link" style="clear:both">
-						<a href="/link/$s.id/view">$s.title</a><br/><em class="info">($short(s.url)) -  @$s.user.name $pretty_date(s.created_at)</em>
+						<a href="/link/$s.id/view">$s.title</a><br/><em class="info">($short(s.url)) - via $s.user.name $pretty_date(s.created_at)</em>
 						<div class="info">
 							<small style="pull-right">
-								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes votes | <a class="link" href="/link/$s.id">$s.comments_count comments</a>, $s.views views
+								<a href="/link/$s.id/upvote"><i class="icon-arrow-up"></i></a> $s.votes <i class="icon-star-empty"></i> | <a class="link" href="/link/$s.id">$s.comments_count comments</a>, $s.views views
 							</small>
 						</div>
 					</div>
