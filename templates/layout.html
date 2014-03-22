@@ -10,14 +10,17 @@ $def with (content)
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 		
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet">	
 		<link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" charset="utf-8"/>
 
 		<link rel="apple-touch-icon" href="/static/touch-icon-iphone.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="/static/touch-icon-ipad.png">
 		<link rel="apple-touch-icon" sizes="120x120" href="/static/touch-icon-iphone-retina.png">
 		<link rel="apple-touch-icon" sizes="152x152" href="/static/touch-icon-ipad-retina.png">
+
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 		
 		<title>Credibility.cc - $content.get("metatitle","Read both side stories.")</title>
 	</head>
@@ -25,15 +28,15 @@ $def with (content)
 	<header class="header">
 		<div class="container">
 			<div class="row">
-				<div class="span5">
+				<div class="pull-left">
 					<span class="logo">C</span> <a href="/" ><strong>Credibility</strong></a> 
 					$if content.menu: 
 						$:content.menu 
 				</div>
-				<div class="span3">
+				
 					$if content.title: 
 						$:content.title
-				</div>
+				
 				<div class="pull-right">
 					<div>
 					$if hasattr(session, 'user'):
@@ -69,6 +72,5 @@ $def with (content)
 			</div>
 		</div>
 	</footer>
-
 </body>
 </html>

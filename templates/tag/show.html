@@ -2,54 +2,73 @@ $def with (id, tags, tagged, topics)
 $var menu: <a href="/topic/new">submit topic</a>
 $var title: 
 
-<div class="span3 column">
-	<div style="margin-top:10px">
-    <h5>Tags</h5>
-		<ul class="nav nav-list">
-			$for tag in tags:
-				<li>
-				$if len(tag.children) > 0:
-					<a href="/tagged/$tag.code">
-						<i class="icon-chevron-right"></i> $tag.name
-					</a>
-					<ul>
-					$for child in tag.children:
-						<li>
-							<a href="/tagged/$child.code">
-								<i class="icon-chevron-right"></i> $child.name
-							</a>
-						</li>
-					</ul>
-				$elif (tag.parent is None):
-					<a href="/tagged/$tag.code">
-						<i class="icon-chevron-right"></i> $tag.name
-					</a>
-			</li>
-	  </ul>
-  </div>
+<div class="row">
+	<em class="pull-right hidden-phone">Click a topic to start reading.</em>
 </div>
+<div class="span3 column sidebar">
+	<div>
+		<h4 class="categories">
+			Categories
+			<span class="pull-right visible-phone" data-toggle="collapse" data-target=".collapse">
+				<i class="icon-chevron-down"></i>
+			</span>
+		</h4>
+	    <div class="collapse in">
+				<ul class="nav nav-list">
+					<li>
+						<a href="/latest">
+							<i class="icon-chevron-right"></i> Latest Topics
+						</a>
+					</li?
+					$for tag in tags:
+						<li>
+						$if len(tag.children) > 0:
+							<a href="/tagged/$tag.code">
+								<i class="icon-chevron-right"></i> $tag.name
+							</a>
+							<ul>
+							$for child in tag.children:
+								<li>
+									<a href="/tagged/$child.code">
+										<i class="icon-chevron-right"></i> $child.name
+									</a>
+								</li>
+							</ul>
+						$elif (tag.parent is None):
+							<a href="/tagged/$tag.code">
+								<i class="icon-chevron-right"></i> $tag.name
+							</a>
+					</li>
+			  </ul>
+			</div>
+  </div>
+  <div style="clear:both"></div>
+</div>
+<script src="/static/nav.js"></script>
 
-<!-- base stories -->
 <div class="span9 column" >
 	<div style="margin-top:10px">	
-    <em class="pull-right">Click a topic to start reading.</em>	
-				<section class="category">
-					<h4>$tagged.name</h4>
-					<ol>
-						$for topic in topics:
-							<li>
-								<div class="topic" style="clear:both">
-								
-									<a href="/topic/$topic.id">$topic.title</a> <em class="info">$topic.hashtag</em> 
-									<div class="info">
-										<small style="color:gray">
-											 <a href="/topic/$topic.id/upvote"><i class="icon-arrow-up"></i></a> $topic.votes votes | added by $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views
-										</small>
-									</div>
-								</div>	
-							</li>
-					</ol>
-				</section>
+		<section class="category">
+			<h4>$tagged.name</h4>
+			<ol>
+				$for topic in topics:
+					<li>
+						<div class="topic" style="clear:both">
+						
+							<a href="/topic/$topic.id">$topic.title</a>
+							<em class="info">$topic.hashtag</em>&nbsp;
+							<small>($topic.votes<i class="icon-star-empty"></i>)</small>
+							<div class="info">
+								<small style="color:gray">
+									<em>
+									 via $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views
+									</em>
+								</small>
+							</div>
+						</div>	
+					</li>
+			</ol>
+		</section>
 	</div>
 </div>
 

@@ -4,45 +4,52 @@ $var title:
 $code
 	count = 0
 
-<div class="span3 column">
-	<div style="margin-top:10px">
-    <h5>Tags</h5>
-		<ul class="nav nav-list">
-			<li>
-				<a href="/latest">
-					<i class="icon-chevron-right"></i> Latest Topics
-				</a>
-			</li?
-			$for tag in tags:
-				<li>
-				$if len(tag.children) > 0:
-					<a href="/tagged/$tag.code">
-						<i class="icon-chevron-right"></i> $tag.name
-					</a>
-					<ul>
-					$for child in tag.children:
+<div class="row">
+	<em class="pull-right hidden-phone">Click a topic to start reading.</em>
+</div>
+<div class="span3 column sidebar">
+	<div>
+		<h4 class="categories">
+			Categories
+			<span class="pull-right visible-phone" data-toggle="collapse" data-target=".collapse">
+				<i class="icon-chevron-down"></i>
+			</span>
+		</h4>
+	    <div class="collapse in">
+				<ul class="nav nav-list">
+					<li>
+						<a href="/latest">
+							<i class="icon-chevron-right"></i> Latest Topics
+						</a>
+					</li?
+					$for tag in tags:
 						<li>
-							<a href="/tagged/$child.code">
-								<i class="icon-chevron-right"></i> $child.name
+						$if len(tag.children) > 0:
+							<a href="/tagged/$tag.code">
+								<i class="icon-chevron-right"></i> $tag.name
 							</a>
-						</li>
-					</ul>
-				$elif (tag.parent is None):
-					<a href="/tagged/$tag.code">
-						<i class="icon-chevron-right"></i> $tag.name
-					</a>
-			</li>
-	  </ul>
+							<ul>
+							$for child in tag.children:
+								<li>
+									<a href="/tagged/$child.code">
+										<i class="icon-chevron-right"></i> $child.name
+									</a>
+								</li>
+							</ul>
+						$elif (tag.parent is None):
+							<a href="/tagged/$tag.code">
+								<i class="icon-chevron-right"></i> $tag.name
+							</a>
+					</li>
+			  </ul>
+			</div>
   </div>
   <div style="clear:both"></div>
 </div>
+<script src="/static/nav.js"></script>
 
-<!-- base stories -->
-<div class="span9 column" >
-	<div style="margin-top:10px">	
-		<div class="row">
-			<em class="pull-right">Click a topic to start reading.</em>
-		</div>
+<div class="span9 column topics" >
+	<div>	
 		<div class="row">
 			<section class="category span4">
 				<h4>Latest Topics</h4>
@@ -50,7 +57,9 @@ $code
 					$for topic in latest_topics:	
 						<li>
 							<div class="topic" style="clear:both">						
-								<a href="/topic/$topic.id">$topic.title</a><br/><em class="info">$topic.hashtag</em> <small>($topic.votes<i class="icon-star-empty"></i>)</small>
+								<a href="/topic/$topic.id">$topic.title</a>
+								<em class="info">$topic.hashtag</em>&nbsp;
+								<small>($topic.votes<i class="icon-star-empty"></i>)</small>
 								<div class="info">
 									<small style="color:gray">
 										 <em>via $topic.user.name $pretty_date(topic.created_at) | $topic.story_count stories, $topic.views views</em>
@@ -67,7 +76,9 @@ $code
 					$for article in latest_articles:	
 						<li>
 							<article class="topic" style="clear:both">		
-								<a href="/link/$article.id">$article.title</a> <small>($article.votes<i class="icon-star-empty"></i>)</small>
+								<a href="/link/$article.id">$article.title</a>
+								<em class="info">in <a href="/topic/$article.topic.id">$article.topic.title</a></em>&nbsp;
+								<small>($article.votes<i class="icon-star-empty"></i>)</small>
 								<div class="info">
 									<small style="color:gray">
 										 <em>via $article.user.name $pretty_date(article.created_at) | $article.views views</em>
@@ -91,7 +102,7 @@ $code
 						$for topic in tagged:	
 							<li>
 								<div class="topic" style="clear:both">
-									<a href="/topic/$topic.id">$topic.title</a><br/><em class="info">$topic.hashtag</em> <small>($topic.votes<i class="icon-star-empty"></i>)</small>
+									<a href="/topic/$topic.id">$topic.title</a><em class="info">$topic.hashtag</em> <small>($topic.votes<i class="icon-star-empty"></i>)</small>
 									<div class="info">
 										<small style="color:gray">
 											<em>
