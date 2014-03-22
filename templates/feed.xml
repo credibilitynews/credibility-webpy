@@ -1,0 +1,30 @@
+$def with (date, category, posts)
+
+<!--?xml version="1.0"?-->
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+
+   <channel>
+      <atom:link href="http://credibility.cc/feed" rel="self" type="application/rss+xml" />
+      <title>Credibility.cc $category - RSS Feed</title>
+      <link>http://www.credibility.cc/</link>
+      <description>Read both side stories</description>
+      <language>en-us</language>
+      <pubDate>$date</pubDate>
+
+      <lastBuildDate>$date</lastBuildDate>
+      <generator>Credibility.cc</generator>
+      <managingEditor>mailbox@credibility.cc (Admin)</managingEditor>
+      <webMaster>mailbox@credibility.cc (Admin)</webMaster>
+
+      $for post in posts:
+         <item>
+            <title>$post.title</title>
+            <link>$post.link</link>
+            <description><!--[CDATA[$:post.body]--></description>
+            <category>$post.category</category>
+            <comments>$post.comments</comments>
+            <pubDate>$post.pub_date</pubDate>
+            <guid>$post.guid</guid>
+         </item>
+    </channel>
+</rss>
