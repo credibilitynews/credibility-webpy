@@ -1,11 +1,12 @@
 $def with (tags, topics, latest_topics, latest_articles)
-$var menu: <a href="/topic/new">submit topic</a>
+$var menu: <a class="hidden-phone" href="/topic/new">submit topic</a>
 $var title: 
 $code
 	count = 0
 
 <div class="row">
 	<em class="pull-right hidden-phone">Click a topic to start reading.</em>
+	<a class="visible-phone" href="/topic/new">submit topic</a>
 </div>
 <div class="span3 column sidebar">
 	<div>
