@@ -120,6 +120,11 @@ section.category {
 	header.header .logo{
 		font-size: 16px;
 	}
+	h4.categories 
+	>a
+	>span{
+		padding-left: 250px;
+	}
 }
 
 

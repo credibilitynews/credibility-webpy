@@ -11,38 +11,38 @@ $code
 	<div>
 		<h4 class="categories">
 			Categories
-			<a class="pull-right visible-phone" data-toggle="collapse" data-target=".collapse">
-				<i class="icon-chevron-down"></i>
+			<a class="pull-right visible-phone">
+				<span data-toggle="collapse" data-target=".collapse"><i class="icon-chevron-down"></i></span>
 			</a>
 		</h4>
-	    <div class="collapse in">
-				<ul class="nav nav-list">
+    <div class="collapse in">
+			<ul class="nav nav-list">
+				<li>
+					<a href="/latest">
+						<i class="icon-chevron-right"></i> Latest Topics
+					</a>
+				</li?
+				$for tag in tags:
 					<li>
-						<a href="/latest">
-							<i class="icon-chevron-right"></i> Latest Topics
+					$if len(tag.children) > 0:
+						<a href="/tagged/$tag.code">
+							<i class="icon-chevron-right"></i> $tag.name
 						</a>
-					</li?
-					$for tag in tags:
-						<li>
-						$if len(tag.children) > 0:
-							<a href="/tagged/$tag.code">
-								<i class="icon-chevron-right"></i> $tag.name
-							</a>
-							<ul>
-							$for child in tag.children:
-								<li>
-									<a href="/tagged/$child.code">
-										<i class="icon-chevron-right"></i> $child.name
-									</a>
-								</li>
-							</ul>
-						$elif (tag.parent is None):
-							<a href="/tagged/$tag.code">
-								<i class="icon-chevron-right"></i> $tag.name
-							</a>
-					</li>
-			  </ul>
-			</div>
+						<ul>
+						$for child in tag.children:
+							<li>
+								<a href="/tagged/$child.code">
+									<i class="icon-chevron-right"></i> $child.name
+								</a>
+							</li>
+						</ul>
+					$elif (tag.parent is None):
+						<a href="/tagged/$tag.code">
+							<i class="icon-chevron-right"></i> $tag.name
+						</a>
+				</li>
+		  </ul>
+		</div>
   </div>
   <div style="clear:both"></div>
 </div>
