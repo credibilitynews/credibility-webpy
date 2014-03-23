@@ -13,7 +13,7 @@ $code
 		<h4 class="categories">
 			Categories
 			<a class="pull-right visible-phone">
-				<button data-toggle="collapse" data-target=".collapse"><i class="icon-chevron-down"></i></button>
+				<button class="btn" id="menu-toggle"><i class="icon-chevron-down"></i></button>
 			</a>
 		</h4>
     <div class="collapse in">
@@ -29,7 +29,7 @@ $code
 						<a href="/tagged/$tag.code">
 							<i class="icon-chevron-right"></i> $tag.name
 						</a>
-						<ul>
+						<ul class="nav nav-list">
 						$for child in tag.children:
 							<li>
 								<a href="/tagged/$child.code">

@@ -1,14 +1,23 @@
 var collapseOrShow = function(){
   if($(".visible-phone").css("display")=="block")
-  {$(".collapse").collapse('hide');}
+  {$(".collapse").removeClass('in');}
   else 
-  {$(".collapse").collapse('show');}
+  {$(".collapse").addClass('in');}
 }
-$(window).resize(function(){ 
-  collapseOrShow();
-});
 $(document).ready(function(){
   if($(".visible-phone").css("display")=="block"){
     $(".collapse").removeClass("in");
   }
+  $('#menu-toggle').click(function(){
+    if($(".collapse").hasClass('in'))
+    {
+      $(".collapse").removeClass('in');
+      $(this).html('<i class="icon-chevron-down"></i>');
+    }
+    else 
+    {
+      $(".collapse").addClass('in');
+      $(this).html('<i class="icon-chevron-up"></i>');
+    }
+  });
 });
