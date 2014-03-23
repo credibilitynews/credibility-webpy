@@ -89,16 +89,23 @@ section.category {
 	margin-bottom:30px;
 	margin-top:0px;
 }
+div.categories{
+		padding-top: 10px;
+}
+.categories .title{
+	font-size: 17.5px;
+	font-weight: bolder;
+	margin-bottom: 10px;
+}
+input#menu-collapsed{
+	display:none;
+}
+.menu-content{
+	margin-top:10px;
+}
 
-/* Responsive header */
 @media (max-width: 767px){
-	.sidebar{
-		padding-bottom:0;
-	}
-	h4.categories{
-		background-color: #e0e0e0;
-		padding: 10px;
-	}
+	/* responsive header */
 	body, 
 	header.header 
 	> .container{
@@ -109,22 +116,57 @@ section.category {
 	> .container{
 		padding: 10px;
 	}
-
 	header.header 
 	>.container 
 	>.row{
 		padding: 10px;
 	}
-
 	header.header strong, 
 	header.header .logo{
 		font-size: 16px;
 	}
-	h4.categories 
-	>a
-	>span{
-		padding-left: 40px;
+
+	/* collapse menu */
+	.sidebar{
+		padding-bottom:0;
+	}
+	div.categories{
+		background-color: #e0e0e0;
+		padding: 10px;
+	}
+	.menu #menu-collapsed:checked 
+	~ .menu-content {
+	  display:inherit;
+	}
+	.menu #menu-collapsed:checked 
+	~ .menu-switch > .rise {
+	  display: block;
+	}
+	.menu #menu-collapsed:checked 
+	~ .menu-switch > .set {
+	  display: none;
+	}
+	.menu #menu-collapsed 
+	~ .menu-switch > .rise {
+	  display: none;
+	  padding-left:20px;
+	  cursor: pointer;
+	}
+	.menu #menu-collapsed 
+	~ .menu-switch > .set {
+	  display: block;
+	  padding-left:20;
+	  cursor: pointer;
+	}
+	.menu #menu-collapsed 
+	~ .menu-content {
+		display:none;
+	}
+	.categories .title{
+		display:inline;
 	}
 }
+
+
 
 

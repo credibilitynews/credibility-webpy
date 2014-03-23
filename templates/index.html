@@ -9,14 +9,14 @@ $code
 	<a class="visible-phone" href="/topic/new">submit topic</a>
 </div>
 <div class="span3 column sidebar">
-	<div>
-		<h4 class="categories">
-			Categories
-			<a class="pull-right visible-phone">
-				<button class="btn" id="menu-toggle"><i class="icon-chevron-down"></i></button>
-			</a>
-		</h4>
-    <div class="collapse in">
+	<div class="categories menu">
+		<span class="title">Categories</span>
+			<input type="checkbox" id="menu-collapsed" name="menu-collapsed"/>
+			<span class="pull-right menu-switch visible-phone">
+				<label for="menu-collapsed" class="rise"><i class="icon-chevron-up"></i></label>
+				<label for="menu-collapsed" class="set"><i class="icon-chevron-down"></i></label>
+		</span>
+		<div class="menu-content">
 			<ul class="nav nav-list">
 				<li>
 					<a href="/latest">
@@ -44,10 +44,8 @@ $code
 				</li>
 		  </ul>
 		</div>
-  </div>
-  <div style="clear:both"></div>
+	</div>  
 </div>
-<script src="/static/nav.js"></script>
 
 <div class="span9 column topics" >
 	<div>	
