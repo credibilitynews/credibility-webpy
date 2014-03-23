@@ -1,9 +1,3 @@
-var collapseOrShow = function(){
-  if($(".visible-phone").css("display")=="block")
-  {$(".collapse").removeClass('in');}
-  else 
-  {$(".collapse").addClass('in');}
-}
 $(document).ready(function(){
   if($(".visible-phone").css("display")=="block"){
     $(".collapse").removeClass("in");
@@ -11,12 +5,12 @@ $(document).ready(function(){
   $('#menu-toggle').click(function(){
     if($(".collapse").hasClass('in'))
     {
-      $(".collapse").removeClass('in');
+      $(".collapse").collapse('hide');
       $(this).html('<i class="icon-chevron-down"></i>');
     }
     else 
     {
-      $(".collapse").addClass('in');
+      $(".collapse").collapse('show');
       $(this).html('<i class="icon-chevron-up"></i>');
     }
   });
