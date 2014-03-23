@@ -564,7 +564,7 @@ class new_left_link:
             description="url:",
             **{'ng-model': 'url', 
             'ng-change': "suggestTitle()"}),
-        web.form.Button('add left-sided story link'),
+        web.form.Button('add story link'),
     )
 
     def GET(self, id):
@@ -701,7 +701,7 @@ class new_right_link:
             description="url:",
             **{'ng-model': 'url', 
             'ng-change': "suggestTitle()"}),
-        web.form.Button('add right sided story link'),
+        web.form.Button('add story link'),
     )
 
     def GET(self, id):
