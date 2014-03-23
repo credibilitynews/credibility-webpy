@@ -45,12 +45,12 @@ footer .container{
 	padding-top:20px;
 }
 .topic{
-	margin-top: 15px;
-	margin-bottom: 5px;
+	padding:10px;
 }
 .topic > a{
 	display: block;
 	margin-bottom: 0px;
+	font-size: 11pt;
 }
 .category{
 	margin-top: 10px;
@@ -59,6 +59,9 @@ footer .container{
 .link{
 	margin-top: 20px;
 	margin-bottom: 5px;
+}
+.link > a{
+	font-size: 11pt;
 }
 .navbar-inner, 
 .navbar .btn-navbar{
