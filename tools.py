@@ -1,10 +1,30 @@
+import web
+import re
+
+from datetime import datetime
+
+
+def shorten_link(link):
+    l = re.findall(r"^https?://(.+)/?", link)
+
+    if len(l) > 0:
+        n=0
+        try:
+            n = l[0].index('/')
+        except ValueError:
+            n = len(l[0])
+
+        return l[0][:n].replace("www.", "")
+    else:
+        return link.replace("www.", "")
+
+
 def pretty_date(time=False):
     """
     Get a datetime object or a int() Epoch timestamp and return a
     pretty string like 'an hour ago', 'Yesterday', '3 months ago',
     'just now', etc
     """
-    from datetime import datetime
     now = datetime.now()
     if type(time) is int:
         diff = now - datetime.fromtimestamp(time)

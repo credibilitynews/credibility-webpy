@@ -42,8 +42,8 @@ $def with (content)
 					$if hasattr(session, 'user'):
 						<a href="/user/$session.user.id"><em>hello $session.user.name</em>.</a> <a href="/logout">logout</a>
 					$else:
-						<a href="/login">login</a> or 
-						<a href="/register">register</a>
+						<a href="/user/login">login</a> or 
+						<a href="/user/register">register</a>
 						<a href="/feed"><img src="/static/feed-icon-small.png" alt="RSS Feed" border="0" /></a>
 		    	</div>
 				</div>
