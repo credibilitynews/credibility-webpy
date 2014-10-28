@@ -8,7 +8,7 @@ def shorten_link(link):
     l = re.findall(r"^https?://(.+)/?", link)
 
     if len(l) > 0:
-        n=0
+        n = 0
         try:
             n = l[0].index('/')
         except ValueError:
@@ -28,7 +28,7 @@ def pretty_date(time=False):
     now = datetime.now()
     if type(time) is int:
         diff = now - datetime.fromtimestamp(time)
-    elif isinstance(time,datetime):
+    elif isinstance(time, datetime):
         diff = now - time
     elif not time:
         diff = now - now
@@ -44,13 +44,13 @@ def pretty_date(time=False):
         if second_diff < 60:
             return str(second_diff) + " seconds ago"
         if second_diff < 120:
-            return  "a minute ago"
+            return "a minute ago"
         if second_diff < 3600:
-            return str( second_diff / 60 ) + " minutes ago"
+            return str(second_diff / 60) + " minutes ago"
         if second_diff < 7200:
             return "an hour ago"
         if second_diff < 86400:
-            return str( second_diff / 3600 ) + " hours ago"
+            return str(second_diff / 3600) + " hours ago"
     if day_diff == 1:
         return "Yesterday"
     if day_diff < 7:

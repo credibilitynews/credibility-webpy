@@ -1,6 +1,7 @@
 from sqlalchemy.orm.interfaces import MapperExtension
 from datetime import datetime
 
+
 class TimestampExtension(MapperExtension):
 
     def before_insert(self, mapper, connection, instance):

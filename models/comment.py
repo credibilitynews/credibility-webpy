@@ -1,14 +1,15 @@
-from sqlalchemy import Column, Integer, DateTime, String, Boolean, ForeignKey, distinct, UniqueConstraint, Text
+from sqlalchemy import Column, Integer, DateTime, String, \
+    Boolean, ForeignKey, distinct, UniqueConstraint, Text
 from sqlalchemy.orm import relationship, backref, object_session
 
-from models import Base 
+from models import Base
 from models.user import User
 from models.base_extension import TimestampExtension
 
 
 class Comment(Base):
     __tablename__ = 'comments'
-    __mapper_args__ = { 'extension': TimestampExtension() }
+    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     content = Column(Text)
@@ -27,17 +28,20 @@ class Comment(Base):
         self.link_id = link_id
 
     def __repr__(self):
-        return "<Link('%s', %d, %d)>" % (self.content, self.user_id, self.link_id)
+        return "<Link('%s', %d, %d)>" \
+            % (self.content, self.user_id, self.link_id)
 
     def _get_points(self):
-        return object_session(self).query(distinct(CommentVote.user_id)).filter_by(comment_id=self.id).count()
+        return object_session(self).query(
+            distinct(CommentVote.user_id)).filter_by(
+                comment_id=self.id).count()
 
     points = property(_get_points)
 
 
 class CommentVote(Base):
     __tablename__ = 'comment_votes'
-    __mapper_args__ = { 'extension': TimestampExtension() }
+    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
@@ -54,4 +58,3 @@ class CommentVote(Base):
 
     def __repr__(self):
         return "<LinkVote(%d, %d)>" % (self.user_id, self.comment_id)
-

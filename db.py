@@ -1,4 +1,6 @@
-import os, web
+import os
+import web
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -6,6 +8,7 @@ engine = create_engine(os.environ['DATABASE_URL'])
 
 Session = sessionmaker(bind=engine)
 session = Session()
+
 
 def load_sqla(handler):
     try:
