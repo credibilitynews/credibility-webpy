@@ -1,6 +1,7 @@
 from datetime import datetime
 import time
 import math
+from tools import pretty_date
 
 from sqlalchemy import Column, Integer, DateTime, String, \
     Boolean, ForeignKey, distinct, UniqueConstraint, Text
@@ -79,7 +80,8 @@ class Link(Base):
             "topic_title": self.topic.title,
             "type": self.type,
             "views": self.views,
-            "id": self.id
+            "id": self.id,
+            "created_at": pretty_date(self.created_at)
         }
 
 class LinkVote(Base):
