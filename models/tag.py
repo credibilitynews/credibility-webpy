@@ -35,3 +35,13 @@ class Tag(Base):
 
     def __repr__(self):
         return "<Tag('%s','%s')>" % (self.name, self.code)
+
+    @property
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "code": self.code,
+            "parent_id": self.parent_id,
+            "children": [i.serialize for i in self.children]
+        }

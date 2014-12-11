@@ -76,6 +76,18 @@ class Topic(Base):
             Link).filter_by(topic_id=self.id).count()
     story_count = property(_get_story_count)
 
+    @property
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "hashtag": self.hashtag,
+            "views": self.views,
+            "left": [i.serialize for i in self.left_stories],
+            "right": [i.serialize for i in self.right_stories],
+            "fact": [i.serialize for i in self.fact_stories]
+        }
+
 
 class TopicVote(Base):
     __tablename__ = 'topic_votes'

@@ -59,7 +59,6 @@ class Link(Base):
     def _get_comments_count(self):
         return object_session(self).query(
             Comment).filter_by(link_id=self.id).count()
-
     comments_count = property(_get_comments_count)
 
     def _get_comments(self):
@@ -68,9 +67,20 @@ class Link(Base):
         return sorted(
             comments,
             key=lambda comment: comment.points, reverse=True)
-
     comments = property(_get_comments)
 
+    @property
+    def serialize(self):
+        return {
+            "title": self.title,
+            "url": self.url,
+            "user": self.user.serialize,
+            "topic_id": self.topic.id,
+            "topic_title": self.topic.title,
+            "type": self.type,
+            "views": self.views,
+            "id": self.id
+        }
 
 class LinkVote(Base):
     __tablename__ = 'link_votes'

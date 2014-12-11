@@ -24,3 +24,10 @@ class User(Base):
 
     def __repr__(self):
         return "<User('%s','%s', '%s')>" % (self.name, self.password)
+
+    @property
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
