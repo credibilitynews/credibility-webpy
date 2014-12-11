@@ -1,4 +1,5 @@
 import web
+import json
 from web import ctx
 
 import db
@@ -38,4 +39,7 @@ class tag:
             topics = sorted(
                 topics + child_topics,
                 key=lambda topic: topic.points, reverse=True)
+
+        web.header('Content-Type', 'application/json');
+        return json.dumps({"data": tag.serialize})
         return render.tag.show(id, tags, tag, topics)

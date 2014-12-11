@@ -1,5 +1,6 @@
 import web
 from web import ctx
+import json
 
 import db
 from tools import shorten_link, pretty_date
@@ -125,7 +126,10 @@ class topic:
         t = self.topic(id)
         db.session.query(Topic).filter_by(id=id).update({'views': t.views+1})
 
-        return render.topic.show(id, self.topic(id))
+        web.header("Content-Type", 'application/json')
+        return json.dumps({
+            "data": self.topic(id).serialize
+        })
 
 
 class upvote_topic:

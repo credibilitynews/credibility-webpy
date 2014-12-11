@@ -4,11 +4,10 @@ import db
 import re
 import collections
 import requests
-import json
 import operator
+import json
 from web import ctx
-
-from sqlalchemy import desc
+from sqlalchemy import desc, sql
 
 from tools import pretty_date, shorten_link
 from models.tag import Tag
@@ -25,11 +24,16 @@ urls = (
 app = web.application(urls, locals())
 
 
+class favicon:
+    def GET(self):
+        raise web.redirect('/static/favicon.ico')
+
+
 class index:
 
     def all_tags(self):
         return sorted(
-            db.session.query(Tag).all(),
+            db.session.query(Tag).filter(Tag.parent_id == sql.expression.null()),
             cmp=lambda x, y: cmp(x.name, y.name))
 
     def all_topics(self):
@@ -47,26 +51,22 @@ class index:
         return db.session.query(Link).order_by(desc(Link.created_at)).limit(5)
 
     def GET(self):
-        render = web.template.render(
-            'templates/', base='layout',
-            globals={
-                'session': ctx.session, 'hasattr': hasattr,
-                'pretty_date': pretty_date})
-        username = None
-        if hasattr(ctx.session, 'username'):
-            username = ctx.session.username
-
         topics = self.all_topics()
         tags = self.all_tags()
         latest_topics = self.latest_topics()
         latest_articles = self.latest_articles()
 
-        return render.index(tags, topics, latest_topics, latest_articles)
-
-
-class favicon:
-    def GET(self):
-        raise web.redirect('/static/favicon.ico')
+        web.header('Content-Type', 'application/json')
+        web.header('Access-Control-Allow-Origin', 'http://localhost:8000')
+        web.header('Access-Control-Allow-Credentials', 'true')
+        return json.dumps({
+            "data": {
+                "latest_topics": [i.serialize for i in latest_topics],
+                "categories": [i.serialize for i in tags],
+                "latest_articles": [i.serialize for i in latest_articles],
+                "topics": [i.serialize for i in topics]
+            }
+        })
 
 
 class latest:
@@ -80,42 +80,43 @@ class latest:
             .order_by(desc(Topic.created_at)).limit(10)
 
     def GET(self):
-        render = web.template.render(
-            'templates/', base='layout',
-            globals={
-                'session': ctx.session, 'hasattr': hasattr,
-                'short': shorten_link, 'pretty_date': pretty_date})
         tags = self.all_tags()
         tag = type('Tag', (object,), {"name": "Latest Topics"})
         topics = self.latest_topics()
-        return render.tag.show(id, tags, tag, topics)
+
+        web.header('Content-Type', 'application/json')
+        return json.dumps({
+            "data": {
+                "tags": [i.serialize for i in tags],
+                "topics": [i.serialize for i in topics]
+            }
+        })
 
 
 class about:
     def GET(self):
-        render = web.template.render(
-            'templates/', base='layout',
-            globals={
-                'session': ctx.session, 'hasattr': hasattr,
-                'pretty_date': pretty_date})
-        return render.static.about()
+        web.header('Content-Type', 'application/json')
+        return json.dumps({
+            "data": {
+                "text": ""
+            }
+        })
 
 
 class faq:
     def GET(self):
-        render = web.template.render(
-            'templates/', base='layout',
-            globals={
-                'session': ctx.session, 'hasattr': hasattr,
-                'pretty_date': pretty_date})
-        return render.static.faq()
+        web.header('Content-Type', 'application/json')
+        return json.dumps({
+            "data": {
+                "text": ""
+            }
+        })
 
 
 class contact:
     def GET(self):
-        render = web.template.render(
-            'templates/', base='layout',
-            globals={
-                'session': ctx.session, 'hasattr': hasattr,
-                'pretty_date': pretty_date})
-        return render.static.contact()
+        return json.dumps({
+            "data": {
+                "text": ""
+            }
+        })
