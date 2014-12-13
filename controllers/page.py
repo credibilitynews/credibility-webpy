@@ -64,7 +64,7 @@ class index:
                 "latest_topics": [i.serialize for i in latest_topics],
                 "categories": [i.serialize for i in tags],
                 "latest_articles": [i.serialize for i in latest_articles],
-                "topics": [i.serialize for i in topics]
+                "topic_stats": [i.serialize for i in topics]
             }
         })
 
