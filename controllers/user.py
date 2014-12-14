@@ -1,6 +1,7 @@
 import web
 import db
 import hashlib
+import json
 from web import ctx
 
 from tools import pretty_date
@@ -23,6 +24,8 @@ class logout:
 
 
 class login:
+    def __init__(self):
+        self.user = False
 
     def valid_email_password(self, username, password):
         pwdhash = hashlib.md5(password).hexdigest()
@@ -31,7 +34,7 @@ class login:
         if not user:
             return False
         else:
-            ctx.session.user = user
+            self.user = user
             return True
 
     login_form = web.form.Form(
@@ -60,20 +63,18 @@ class login:
 
     def POST(self):
         i = web.input()
-        login_form = self.login_form()
         login_success = self.valid_email_password(i.username, i.password)
-        render = web.template.render(
-            'templates/', base='layout',
-            globals={
-                'session': ctx.session,
-                'hasattr': hasattr, 'pretty_date': pretty_date})
 
-        if (not login_form.validates()) or (not login_success):
-            return render.user.login(login_form, "Log in")
+        if (not login_success):
+            web.header("Content-Type", "application/json")
+            return json.dumps({
+                "error": "invalid username/password"
+            })
         else:
-            ctx.session.logged_in = True
-            ctx.session.username = ctx.session.user.name
-            web.seeother('/', absolute=True)
+            web.header("Content-Type", "application/json")
+            return json.dumps({
+                "token": self.user.generate_auth_token()
+            })
 
 
 class register:

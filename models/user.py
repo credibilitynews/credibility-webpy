@@ -1,6 +1,8 @@
+import os
 from sqlalchemy import Column, Integer, DateTime, String, \
     Boolean, ForeignKey, distinct, UniqueConstraint, Text
 from sqlalchemy.orm import relationship, backref, object_session
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from base_extension import TimestampExtension
 from models import Base
@@ -31,3 +33,19 @@ class User(Base):
             "id": self.id,
             "name": self.name
         }
+
+    def generate_auth_token(self, expiration = 600):
+        s = Serializer(os.environ['SECRET_KEY'], expires_in = expiration)
+        return s.dumps({ 'id': self.id })
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None # valid token, but expired
+        except BadSignature:
+            return None # invalid token
+        user = User.query.get(data['id'])
+        return user
