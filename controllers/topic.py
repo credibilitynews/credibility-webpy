@@ -125,7 +125,9 @@ class topic:
 
         t = self.topic(id)
         db.session.query(Topic).filter_by(id=id).update({'views': t.views+1})
-
+        
+        web.header("Access-Control-Allow-Origin", "http://localhost:8000")
+        web.header("Access-Control-Allow-Credentials", 'true')
         web.header("Content-Type", 'application/json')
         return json.dumps({
             "data": self.topic(id).serialize

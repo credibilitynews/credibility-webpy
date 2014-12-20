@@ -48,7 +48,7 @@ class index:
             .order_by(desc(Topic.created_at)).limit(5)
 
     def latest_articles(self):
-        return db.session.query(Link).order_by(desc(Link.created_at)).limit(5)
+        return db.session.query(Link).order_by(desc(Link.created_at)).limit(4)
 
     def GET(self):
         topics = self.all_topics()

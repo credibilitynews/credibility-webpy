@@ -1,7 +1,7 @@
 from datetime import datetime
 import time
 import math
-from tools import pretty_date
+from tools import pretty_date, shorten_link
 
 from sqlalchemy import Column, Integer, DateTime, String, \
     Boolean, ForeignKey, distinct, UniqueConstraint, Text
@@ -11,7 +11,6 @@ from models import Base
 from models.base_extension import TimestampExtension
 from models.user import User
 from models.comment import Comment
-
 
 class Link(Base):
     __tablename__ = 'links'
@@ -76,6 +75,11 @@ class Link(Base):
             "id": self.id,
             "title": self.title,
             "url": self.url,
+            "domain_name": shorten_link(self.url),
+            "topic": {
+                "id": self.topic.id,
+                "title": self.topic.title
+            },
             "topic_id": self.topic.id,
             "topic_title": self.topic.title,
             "type": self.type,
