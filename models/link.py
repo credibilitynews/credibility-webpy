@@ -73,15 +73,19 @@ class Link(Base):
     @property
     def serialize(self):
         return {
+            "id": self.id,
             "title": self.title,
             "url": self.url,
-            "user": self.user.serialize,
             "topic_id": self.topic.id,
             "topic_title": self.topic.title,
             "type": self.type,
-            "views": self.views,
-            "id": self.id,
-            "created_at": pretty_date(self.created_at)
+            "meta": {
+                "user": self.user.serialize,
+                "views": self.views,
+                "domain_name": "",
+                "author": "",
+                "created_at": pretty_date(self.created_at)
+            },
         }
 
 class LinkVote(Base):

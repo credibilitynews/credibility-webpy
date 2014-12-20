@@ -76,16 +76,45 @@ class Topic(Base):
             Link).filter_by(topic_id=self.id).count()
     story_count = property(_get_story_count)
 
+    def total_views(self, stories):
+        return reduce(lambda sum,y: sum+y.views, stories, 0)
+
     @property
     def serialize(self):
         return {
             "id": self.id,
             "title": self.title,
             "hashtag": self.hashtag,
-            "views": self.views,
-            "left": [i.serialize for i in self.left_stories],
-            "right": [i.serialize for i in self.right_stories],
-            "fact": [i.serialize for i in self.fact_stories]
+            "meta": {
+                "views": self.views,
+                "articles": self.story_count
+            },
+            "stories": {
+                "left": {
+                    "title": "left",
+                    "meta": {
+                        "views": self.total_views(self.left_stories),
+                        "articles": len(self.left_stories)
+                    },
+                    "stories": [i.serialize for i in self.left_stories]
+                },
+                "right": {
+                    "title": "right",
+                    "meta": {
+                        "views": self.total_views(self.right_stories),
+                        "articles": len(self.right_stories)
+                    },
+                    "stories": [i.serialize for i in self.right_stories]
+                },
+                "fact": {
+                    "title": "fact",
+                    "meta": {
+                        "views": self.total_views(self.fact_stories),
+                        "articles": len(self.fact_stories)
+                    },
+                    "stories": [i.serialize for i in self.fact_stories]
+                }
+            }
         }
 
 
