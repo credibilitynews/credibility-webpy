@@ -78,6 +78,10 @@ class Topic(Base):
 
     def total_views(self, stories):
         return reduce(lambda sum,y: sum+y.views, stories, 0)
+    
+    def all_stories(self):
+        all = self.left_stories + self.right_stories + self.fact_stories
+        return sorted(all, key=lambda story: story.created_at, reverse=True)
 
     @property
     def serialize(self):
@@ -113,6 +117,14 @@ class Topic(Base):
                         "articles": len(self.fact_stories)
                     },
                     "stories": [i.serialize for i in self.fact_stories]
+                },
+                "all": {
+                    "title": "all",
+                    "meta": {
+                        "views": 0,
+                        "articles": 0
+                    },
+                    "stories": [i.serialize for i in self.all_stories()]
                 }
             }
         }

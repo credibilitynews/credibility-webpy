@@ -76,6 +76,7 @@ class Link(Base):
             "title": self.title,
             "url": self.url,
             "domain_name": shorten_link(self.url),
+            "type": self.type, 
             "topic": {
                 "id": self.topic.id,
                 "title": self.topic.title
@@ -88,7 +89,9 @@ class Link(Base):
                 "views": self.views,
                 "domain_name": "",
                 "author": "",
-                "created_at": pretty_date(self.created_at)
+                "created_time_ago": pretty_date(self.created_at),
+                "created_at": self.created_at.strftime('%d %b, %Y'),
+                "created_key": int(self.created_at.strftime("%Y%m"))
             },
         }
 
