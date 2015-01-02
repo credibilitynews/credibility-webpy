@@ -89,9 +89,11 @@ class Topic(Base):
             "id": self.id,
             "title": self.title,
             "hashtag": self.hashtag,
+            "summary": self.title,  
             "meta": {
                 "views": self.views,
-                "articles": self.story_count
+                "articles": self.story_count,
+                "created_at": self.created_at.strftime('%d %b, %Y')
             },
             "stories": {
                 "left": {

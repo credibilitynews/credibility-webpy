@@ -45,7 +45,7 @@ class index:
 
     def latest_topics(self):
         return db.session.query(Topic) \
-            .order_by(desc(Topic.created_at)).limit(5)
+            .order_by(desc(Topic.created_at))
 
     def latest_articles(self):
         return db.session.query(Link).order_by(desc(Link.created_at)).limit(4)
