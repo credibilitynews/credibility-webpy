@@ -55,19 +55,19 @@ class Topic(Base):
 
     def _get_left_stories(self):
         stories = object_session(self).query(
-            Link).filter_by(topic_id=self.id, type=1).all()
+            Link).filter_by(topic_id=self.id, bias=1).all()
         return sorted(stories, key=lambda story: story.points, reverse=True)
     left_stories = property(_get_left_stories)
 
     def _get_right_stories(self):
         stories = object_session(self).query(
-            Link).filter_by(topic_id=self.id, type=2).all()
+            Link).filter_by(topic_id=self.id, bias=2).all()
         return sorted(stories, key=lambda story: story.points, reverse=True)
     right_stories = property(_get_right_stories)
 
     def _get_fact_stories(self):
         stories = object_session(self).query(
-            Link).filter_by(topic_id=self.id, type=0).all()
+            Link).filter_by(topic_id=self.id, bias=0).all()
         return sorted(stories, key=lambda story: story.points, reverse=True)
     fact_stories = property(_get_fact_stories)
 

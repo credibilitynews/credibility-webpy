@@ -214,7 +214,7 @@ class new_left_link:
         else:
             link = Link(
                 title=i.title, url=i.url,
-                topic_id=id, user_id=ctx.session.user.id, type=1)
+                topic_id=id, user_id=ctx.session.user.id, bias=1)
             link.views = 1
             db.session.add(link)
             db.session.commit()
@@ -290,7 +290,7 @@ class new_fact_link:
         else:
             link = Link(
                 title=i.title, url=i.url,
-                topic_id=id, user_id=ctx.session.user.id, type=0)
+                topic_id=id, user_id=ctx.session.user.id, bias=0)
             link.views = 1
             db.session.add(link)
             db.session.commit()
@@ -365,7 +365,7 @@ class new_right_link:
         else:
             link = Link(
                 title=i.title, url=i.url,
-                topic_id=id, user_id=ctx.session.user.id, type=2)
+                topic_id=id, user_id=ctx.session.user.id, bias=2)
             link.views = 1
             db.session.add(link)
             db.session.commit()

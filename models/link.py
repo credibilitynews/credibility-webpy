@@ -21,7 +21,7 @@ class Link(Base):
     url = Column(String(256))
     user_id = Column(Integer, ForeignKey('users.id'))
     topic_id = Column(Integer, ForeignKey('topics.id'))
-    type = Column(Integer)
+    bias = Column(Integer)
     active = Column(Boolean, default=True)
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
@@ -30,12 +30,12 @@ class Link(Base):
     user = relationship("User")
     topic = relationship("Topic")
 
-    def __init__(self, title, url, user_id, topic_id, type):
+    def __init__(self, title, url, user_id, topic_id, bias):
         self.title = title
         self.url = url
         self.user_id = user_id
         self.topic_id = topic_id
-        self.type = type
+        self.bias = bias
 
     def __repr__(self):
         return "<Link('%s','%s', %d, %d)>" \
