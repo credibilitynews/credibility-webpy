@@ -1,6 +1,8 @@
 import hashlib
 import web
 import db
+import os
+from urlparse import urlparse
 
 from controllers import page, topic, feed, link, tagged, user
 
@@ -20,17 +22,19 @@ urls = (
     '/', page.index
 )
 
+
 app = web.subdir_application(urls)
 
+url = urlparse(os.environ['DATABASE_URL'])
+dbs = web.database(dbn='postgres', db=url.path[1:], host=url.hostname, port=url.port, user=url.username, pw=url.password)
+store = web.session.DBStore(dbs, 'sessions')
+session = web.session.Session(app, store, initializer={'count': 0})
 
 def session_hook():
-    session = web.session.Session(app, web.session.DiskStore('sessions'))
     web.ctx.session = session
-
 
 app.add_processor(web.loadhook(session_hook))
 app.add_processor(db.load_sqla)
-
 
 if __name__ == "__main__":
     app.run()
