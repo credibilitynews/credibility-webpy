@@ -27,7 +27,7 @@ app = web.subdir_application(urls)
 
 url = urlparse(os.environ['DATABASE_URL'])
 dbs = web.database(dbn='postgres', db=url.path[1:], host=url.hostname, port=url.port, user=url.username, pw=url.password)
-store = web.session.DBStore(dbs, 'sessions')
+store = web.session.DBStore(dbs, 'user_sessions')
 session = web.session.Session(app, store, initializer={'count': 0})
 
 def session_hook():
