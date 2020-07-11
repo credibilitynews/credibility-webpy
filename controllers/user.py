@@ -7,9 +7,9 @@ from tools import pretty_date
 from models.user import User
 
 urls = (
-    '/login', 'login',
-    '/register', 'register',
-    '/logout', 'logout',
+    # '/login', 'login',
+    # '/register', 'register',
+    # '/logout', 'logout',
     '/user/(\d+)', 'user')
 
 app = web.application(urls, globals())
