@@ -33,3 +33,6 @@ class Tag(Base):
 
     def __repr__(self):
         return "<Tag('%s','%s')>" % (self.name, self.code)
+
+    def __gt__(self, tag):
+        return self.name > tag.name
