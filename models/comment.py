@@ -4,12 +4,10 @@ from sqlalchemy.orm import relationship, backref, object_session
 
 from models import Base
 from models.user import User
-from models.base_extension import TimestampExtension
 
 
 class Comment(Base):
     __tablename__ = 'comments'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     content = Column(Text)
@@ -41,7 +39,6 @@ class Comment(Base):
 
 class CommentVote(Base):
     __tablename__ = 'comment_votes'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))

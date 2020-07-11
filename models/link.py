@@ -7,14 +7,12 @@ from sqlalchemy import Column, Integer, DateTime, String, \
 from sqlalchemy.orm import relationship, backref, object_session
 
 from models import Base
-from models.base_extension import TimestampExtension
 from models.user import User
 from models.comment import Comment
 
 
 class Link(Base):
     __tablename__ = 'links'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     title = Column(String(256))
@@ -74,7 +72,6 @@ class Link(Base):
 
 class LinkVote(Base):
     __tablename__ = 'link_votes'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))

@@ -3,7 +3,6 @@ from sqlalchemy import Column, Integer, DateTime, String, \
 from sqlalchemy.orm import relationship, backref, object_session
 
 from models import Base
-from models.base_extension import TimestampExtension
 from models.user import User
 from models.link import Link, LinkVote
 from models.tag import topic_tags_association_table
@@ -15,7 +14,6 @@ import math
 
 class Topic(Base):
     __tablename__ = 'topics'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     title = Column(String(256))
@@ -79,7 +77,6 @@ class Topic(Base):
 
 class TopicVote(Base):
     __tablename__ = 'topic_votes'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))

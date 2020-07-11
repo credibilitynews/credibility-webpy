@@ -2,7 +2,6 @@ from sqlalchemy import Table, Column, Integer, DateTime, String, \
     Boolean, ForeignKey, distinct, UniqueConstraint, Text
 from sqlalchemy.orm import relationship, backref, object_session
 
-from models.base_extension import TimestampExtension
 from models import Base
 from models.user import User
 from models.link import Link, LinkVote
@@ -16,7 +15,6 @@ topic_tags_association_table = Table(
 
 class Tag(Base):
     __tablename__ = 'tags'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     name = Column(String(256))

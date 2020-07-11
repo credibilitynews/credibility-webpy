@@ -2,13 +2,11 @@ from sqlalchemy import Column, Integer, DateTime, String, \
     Boolean, ForeignKey, distinct, UniqueConstraint, Text
 from sqlalchemy.orm import relationship, backref, object_session
 
-from base_extension import TimestampExtension
 from models import Base
 
 
 class User(Base):
     __tablename__ = 'users'
-    __mapper_args__ = {'extension': TimestampExtension()}
 
     id = Column(Integer, primary_key=True)
     name = Column(String(256))
