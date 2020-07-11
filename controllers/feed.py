@@ -3,7 +3,7 @@ import web
 from web import ctx
 
 from sqlalchemy import desc
-from email.Utils import formatdate
+from email.utils import formatdate
 
 import db
 from models.link import Link, LinkVote
