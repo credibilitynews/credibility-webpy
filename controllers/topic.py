@@ -37,7 +37,7 @@ class new_topic:
     def all_tags(self=None):
         return sorted(
             db.session.query(Tag).all(),
-            cmp=lambda x, y: cmp(x.name, y.name))
+            key=lambda x: x.name)
 
     title_exists_validator = web.form.Validator(
         'Title already exists', not_title_exists)

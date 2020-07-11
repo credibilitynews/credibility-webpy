@@ -30,7 +30,7 @@ class index:
     def all_tags(self):
         return sorted(
             db.session.query(Tag).all(),
-            cmp=lambda x, y: cmp(x.name, y.name))
+            key=lambda x: x.name)
 
     def all_topics(self):
         topics = {}
@@ -73,7 +73,7 @@ class latest:
     def all_tags(self):
         return sorted(
             db.session.query(Tag).all(),
-            cmp=lambda x, y: cmp(x.name, y.name))
+            key=lambda x: x.name)
 
     def latest_topics(self):
         return db.session.query(Topic)\

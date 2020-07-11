@@ -17,7 +17,7 @@ class tag:
     def all_tags(self):
         return sorted(
             db.session.query(Tag).all(),
-            cmp=lambda x, y: cmp(x.name, y.name))
+            key=lambda x: x.name)
 
     def child_topics(self, child):
         topics = child.topics[:]
