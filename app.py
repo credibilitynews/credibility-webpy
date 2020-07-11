@@ -2,7 +2,6 @@ import hashlib
 import web
 import db
 import os
-from urlparse import urlparse
 
 from controllers import page, topic, feed, link, tagged, user
 
@@ -26,8 +25,10 @@ urls = (
 app = web.subdir_application(urls)
 session = web.session.Session(app, web.session.DiskStore('sessions'))
 
+
 def session_hook():
     web.ctx.session = session
+
 
 app.add_processor(web.loadhook(session_hook))
 app.add_processor(db.load_sqla)
