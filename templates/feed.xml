@@ -4,17 +4,17 @@ $def with (date, category, posts)
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 
    <channel>
-      <atom:link href="http://credibility.cc/feed" rel="self" type="application/rss+xml" />
+      <atom:link href="http://credibility.news/feed" rel="self" type="application/rss+xml" />
       <title>Credibility.cc $category - RSS Feed</title>
-      <link>http://www.credibility.cc/</link>
+      <link>http://www.credibility.news/</link>
       <description>Read both side stories</description>
       <language>en-us</language>
       <pubDate>$date</pubDate>
 
       <lastBuildDate>$date</lastBuildDate>
       <generator>Credibility.cc</generator>
-      <managingEditor>mailbox@credibility.cc (Admin)</managingEditor>
-      <webMaster>mailbox@credibility.cc (Admin)</webMaster>
+      <managingEditor>mailbox@credibility.news (Admin)</managingEditor>
+      <webMaster>mailbox@credibility.news (Admin)</webMaster>
 
       $for post in posts:
          <item>

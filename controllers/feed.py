@@ -28,12 +28,12 @@ class feed:
         return self.format_datetime(last_link[0].created_at)
 
     def topic_link(self, link):
-        return '<a href="http://credibility.cc/topic/' + \
+        return '<a href="http://credibility.news/topic/' + \
             str(link.topic.id) + '">' + link.topic.title + \
             ' ' + link.topic.hashtag+'</a>'
 
     def root_link(self):
-        return '<a href="http://credibility.cc">Credibility.cc</a>'
+        return '<a href="http://credibility.news">Credibility.cc</a>'
 
     def format_datetime(self, datetime):
         return formatdate(time.mktime(datetime.timetuple()))
@@ -45,9 +45,9 @@ class feed:
             post = {}
             post['title'] = article.title+' '+article.topic.hashtag
             post['link'] = article.url
-            post['comments'] = 'http://credibility.cc/link/'+str(article.id)
+            post['comments'] = 'http://credibility.news/link/'+str(article.id)
             post['pub_date'] = self.format_datetime(article.created_at)
-            post['guid'] = 'http://credibility.cc/link/'+str(article.id)
+            post['guid'] = 'http://credibility.news/link/'+str(article.id)
 
             post['body'] = 'More articles on ' + self.topic_link(article) + \
                 ' available at ' + self.root_link()
