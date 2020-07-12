@@ -33,7 +33,7 @@ class feed:
             ' ' + link.topic.hashtag+'</a>'
 
     def root_link(self):
-        return '<a href="http://credibility.news">Credibility.cc</a>'
+        return '<a href="http://credibility.news">Credibility.news</a>'
 
     def format_datetime(self, datetime):
         return formatdate(time.mktime(datetime.timetuple()))

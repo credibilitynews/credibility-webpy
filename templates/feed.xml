@@ -5,14 +5,14 @@ $def with (date, category, posts)
 
    <channel>
       <atom:link href="http://credibility.news/feed" rel="self" type="application/rss+xml" />
-      <title>Credibility.cc $category - RSS Feed</title>
+      <title>Credibility.news $category - RSS Feed</title>
       <link>http://www.credibility.news/</link>
       <description>Read both side stories</description>
       <language>en-us</language>
       <pubDate>$date</pubDate>
 
       <lastBuildDate>$date</lastBuildDate>
-      <generator>Credibility.cc</generator>
+      <generator>Credibility.news</generator>
       <managingEditor>mailbox@credibility.news (Admin)</managingEditor>
       <webMaster>mailbox@credibility.news (Admin)</webMaster>
 
