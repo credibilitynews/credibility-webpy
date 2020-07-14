@@ -39,6 +39,7 @@ nosetests.xml
 
 *.yaml
 
-sessions/
+sessions/*
+!sessions/.gitkeep 
 venv
 *.pyc
