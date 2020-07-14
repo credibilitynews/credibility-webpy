@@ -2,6 +2,7 @@ import web
 from web import ctx
 
 import db
+from functools import reduce
 from tools import shorten_link, pretty_date
 from models.tag import Tag
 
