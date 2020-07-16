@@ -23,11 +23,11 @@ urls = (
 
 
 app = web.subdir_application(urls)
-session = web.session.Session(app, web.session.DiskStore('sessions'))
+# session = web.session.Session(app, web.session.DiskStore('sessions'))
 
 
 def session_hook():
-    web.ctx.session = session
+    web.ctx.session = {}  # session
 
 
 app.add_processor(web.loadhook(session_hook))

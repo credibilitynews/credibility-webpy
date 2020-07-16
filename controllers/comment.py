@@ -11,7 +11,7 @@ class upvote_comment:
 
     def GET(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)

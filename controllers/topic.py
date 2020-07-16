@@ -63,7 +63,7 @@ class new_topic:
 
     def GET(self):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -82,7 +82,7 @@ class new_topic:
 
     def POST(self):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -131,7 +131,7 @@ class topic:
 class upvote_topic:
     def GET(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -176,7 +176,7 @@ class new_left_link:
 
     def GET(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -194,7 +194,7 @@ class new_left_link:
 
     def POST(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -251,7 +251,7 @@ class new_fact_link:
 
     def GET(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -270,7 +270,7 @@ class new_fact_link:
 
     def POST(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -327,7 +327,7 @@ class new_right_link:
 
     def GET(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
@@ -345,7 +345,7 @@ class new_right_link:
 
     def POST(self, id):
         username = None
-        if hasattr(ctx.session, 'username'):
+        if False:  # hasattr(ctx.session, 'username'):
             username = ctx.session.username
         else:
             return web.seeother('/user/register', absolute=True)
