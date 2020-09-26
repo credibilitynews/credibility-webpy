@@ -7,14 +7,14 @@ from models.user import User
 from models.link import Link, LinkVote
 
 topic_tags_association_table = Table(
-    'topic_tags', Base.metadata,
-    Column('topic_id', Integer, ForeignKey('topics.id')),
-    Column('tag_id', Integer, ForeignKey('tags.id'))
+    'Topic_tags_Tag_topics', Base.metadata,
+    Column('Topic_left_id', Integer, ForeignKey('topics.id')),
+    Column('Tag_right_id', Integer, ForeignKey('tags.id'))
 )
 
 
 class Tag(Base):
-    __tablename__ = 'tags'
+    __tablename__ = 'Tag'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(256))

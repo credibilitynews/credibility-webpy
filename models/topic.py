@@ -13,7 +13,7 @@ import math
 
 
 class Topic(Base):
-    __tablename__ = 'topics'
+    __tablename__ = 'Topic'
 
     id = Column(Integer, primary_key=True)
     title = Column(String(256))

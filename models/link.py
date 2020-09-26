@@ -12,7 +12,7 @@ from models.comment import Comment
 
 
 class Link(Base):
-    __tablename__ = 'links'
+    __tablename__ = 'Link'
 
     id = Column(Integer, primary_key=True)
     title = Column(String(256))
