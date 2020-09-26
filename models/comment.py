@@ -11,8 +11,8 @@ class Comment(Base):
 
     id = Column(Integer, primary_key=True)
     content = Column(Text)
-    user_id = Column(Integer, ForeignKey('users.id'))
-    link_id = Column(Integer, ForeignKey('links.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
+    link_id = Column(Integer, ForeignKey('Link.id'))
     active = Column(Boolean, default=True)
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
@@ -41,7 +41,7 @@ class CommentVote(Base):
     __tablename__ = 'comment_votes'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
     comment_id = Column(Integer, ForeignKey('comments.id'))
     created_at = Column(DateTime)
     updated_at = Column(DateTime)

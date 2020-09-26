@@ -17,8 +17,8 @@ class Link(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(256))
     url = Column(String(256))
-    user_id = Column(Integer, ForeignKey('users.id'))
-    topic_id = Column(Integer, ForeignKey('topics.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
+    topic_id = Column(Integer, ForeignKey('Topic.id'))
     bias = Column(Integer)
     active = Column(Boolean, default=True)
     created_at = Column(DateTime)
@@ -74,8 +74,8 @@ class LinkVote(Base):
     __tablename__ = 'link_votes'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
-    link_id = Column(Integer, ForeignKey('links.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
+    link_id = Column(Integer, ForeignKey('Link.id'))
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
 

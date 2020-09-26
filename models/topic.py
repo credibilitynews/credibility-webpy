@@ -18,7 +18,7 @@ class Topic(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(256))
     hashtag = Column(String(256))
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
     active = Column(Boolean, default=True)
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
@@ -79,8 +79,8 @@ class TopicVote(Base):
     __tablename__ = 'topic_votes'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
-    topic_id = Column(Integer, ForeignKey('topics.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
+    topic_id = Column(Integer, ForeignKey('Topic.id'))
 
     user = relationship("User")
     topic = relationship("Topic")

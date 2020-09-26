@@ -8,8 +8,8 @@ from models.link import Link, LinkVote
 
 topic_tags_association_table = Table(
     'Topic_tags_Tag_topics', Base.metadata,
-    Column('Topic_left_id', Integer, ForeignKey('topics.id')),
-    Column('Tag_right_id', Integer, ForeignKey('tags.id'))
+    Column('Topic_left_id', Integer, ForeignKey('Topic.id')),
+    Column('Tag_right_id', Integer, ForeignKey('Tag.id'))
 )
 
 
@@ -19,7 +19,7 @@ class Tag(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(256))
     code = Column(String(256))
-    parent_id = Column(Integer, ForeignKey('tags.id'))
+    parent_id = Column(Integer, ForeignKey('Tag.id'))
 
     children = relationship("Tag")
     parent = relationship("Tag", remote_side=[id])
